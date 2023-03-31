@@ -1,0 +1,7 @@
+{
+  "name": "CountR",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
