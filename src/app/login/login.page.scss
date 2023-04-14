@@ -1,0 +1,14 @@
+ion-content{
+    background-color: black;
+    --background: url('../../assets/images/backgruond_img.svg') no-repeat center center / cover;   
+}
+
+.container{
+    padding: 25px 30px 0px;
+    margin-bottom: 25px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+

@@ -1,0 +1,67 @@
+<ion-header [translucent]="true" class="ion-no-border">
+  <ion-toolbar class="bg_toolbar">
+    <div class="header_padding">
+      <div class="header">
+        <img (click)="user.goBack()" src="../../assets/images/icons/back_arrow.svg" alt="">
+        <div class="toolbar_heading clr_heading sf_pro_display">Profile</div>
+        <div class="mgl_10">
+          <img (click)="user.goToNotifications()" src="../../assets/images/icons/bell_icon.svg" alt="">
+        </div>
+      </div>
+    </div>
+    
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="background_content">
+  <!-- <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">edit-profile</ion-title>
+    </ion-toolbar>
+  </ion-header> -->
+  <div class="container">
+    <div class="right">
+      <img src="../../assets/images/icons/edit_def.svg" alt="">
+    </div>
+
+    <div>
+      <div class="input_lbl clr_heading sf_pro_display">First Name</div>
+        <ion-input type="text" inputmode="text" class="sf_pro_display mgt_10" placeholder="First Name"></ion-input>
+        
+      <div class="input_lbl clr_heading sf_pro_display mgt_18">Last Name</div>
+        <ion-input type="text" inputmode="text" class="sf_pro_display mgt_10" placeholder="Last Name"></ion-input>
+
+        <div class="mgt_18">
+          <div class="input_lbl clr_heading sf_pro_display">Email</div>
+          <ion-input type="email" inputmode="email" class="sf_pro_display mgt_10" placeholder="username@gmail.com"></ion-input>
+        </div>
+        
+        
+      <div class="input_lbl clr_heading sf_pro_display mgt_18">Phone Number</div>
+        <ion-input type="tel" inputmode="tel" class="sf_pro_display mgt_10" placeholder="+41256897646"></ion-input>
+
+      <div class="input_lbl clr_heading sf_pro_display mgt_18">Location</div>
+
+      <div class="input_with_icon pdr_18">
+        <ion-input type="search" inputmode="search" class="sf_pro_display " placeholder="Location"></ion-input>
+        <img src="../../assets/images/icons/location_icon.svg" alt="">
+      </div>
+
+      <div>
+        <div class="input_lbl clr_heading sf_pro_display mgt_15">Password</div>
+        
+        <div class="input_with_icon pdr_18">
+          <ion-input type="{{getPwdType}}" inputmode="text" class="sf_pro_display" placeholder="agsdehwej"></ion-input>
+          <ion-icon  style="color: #828282;" name="eye" *ngIf="showPassword==false" (click)="toggleGetType('pwd')"></ion-icon>
+          <ion-icon  style="color: #828282;" name="eye-off" *ngIf="showPassword==true" (click)="toggleGetType('pwd')"></ion-icon>
+        </div>
+      </div>
+      
+    </div>
+
+    <div class="mgt_40">
+      <ion-button (click)="updateProfile()" expand="block" size="large" class="btn sf_pro_display btn_solid_primary ">Save Changes</ion-button>
+    </div>
+
+  </div>
+</ion-content>

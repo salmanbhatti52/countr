@@ -1,0 +1,44 @@
+ion-content{
+    --background: url('../../assets/images/backgruond_img.svg') no-repeat center center / cover;   
+}
+
+.container{
+    padding: 80px 25px 30px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.top_div{
+    display: flex;
+    justify-content: space-around;
+}
+
+.heading{
+    font-weight: 700;
+    font-size: 48px;
+    color: #FFFFFF;
+}
+
+.sub_heading{
+    font-weight: 600;
+    font-size: 24px;
+    color: #FFFFFF;
+}
+
+.welcome_label{
+    color: #FFFFFF;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 28px;
+}
+
+.desc_box{
+    margin-top: 9px;
+    color: #FFFFFF;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+}
+

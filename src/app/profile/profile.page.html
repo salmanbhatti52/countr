@@ -1,0 +1,128 @@
+<ion-header [translucent]="true" class="ion-no-border">
+  <ion-toolbar class="bg_toolbar">
+    <div class="header_padding">
+      <div class="header">
+        <img src="../../assets/images/icons/side_menu_icon.svg" alt="">
+        <div class="toolbar_heading clr_heading sf_pro_display">Profile</div>
+        <img (click)="user.goToNotifications()" src="../../assets/images/icons/bell_icon.svg" alt="">
+      </div>
+    </div>
+    
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content [fullscreen]="true" class="background_content">
+  <!-- <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">profile</ion-title>
+    </ion-toolbar>
+  </ion-header> -->
+  <div class="container">
+    <div class="bg_primary br_10 pd_12">
+      <div class="flex_center space_between">
+        <div class="font_18_700 sf_pro_display clr_white">Today's <br>
+          Rewards</div>
+        <img src="../../assets/images/gift.svg" alt="">
+      </div>
+      <div class="flex_center space_between mgt_10">
+        <div class="bg_F7F8F8 br_10 pd_10_14 width_31_per">
+          <div class="font_14_400 sf_pro_display clr_heading">Points</div>
+          <div class="font_18_700 sf_pro_display clr_heading mgt_2">100</div>
+        </div>
+        <div class="bg_F7F8F8 br_10 pd_10_14 width_31_per">
+          <div class="font_14_400 sf_pro_display clr_heading">Coupons</div>
+          <div class="font_18_700 sf_pro_display clr_heading mgt_2">5</div>
+        </div>
+        <div class="bg_F7F8F8 br_10 pd_10_14 width_31_per">
+          <div class="font_14_400 sf_pro_display clr_heading">Tickets</div>
+          <div class="font_18_700 sf_pro_display clr_heading mgt_2">4</div>
+        </div>
+      </div>
+    </div>
+
+    <div class=" mgt_10 flex_end"> <span (click)="goToUpcomingRewards()" class="mgr_6 sf_pro_display font_14_400 clr_primary">Upcoming Rewards</span>  <img (click)="goToUpcomingRewards()" src="../../assets/images/icons/arrow_2.svg" alt=""></div>
+
+    <div class="flex_center space_between mgt_20 ">
+      <div class="font_18_700 sf_pro_display clr_heading">Personal Info</div>
+      <img (click)="goToEditProfile()" src="../../assets/images/icons/edit_info.svg" alt="">
+    </div>
+
+    <div class="pd_8">
+      <div class="mgt_6">
+        <div class="pd_10 font_16_500 sf_pro_display clr_heading">First Name</div>
+        <div class="bg_F7F8F8 br_10 height_52 font_14_400 sf_pro_display clr_heading pd_17_16">First Name</div>
+      </div>
+      <div class="mgt_10">
+        <div class="pd_10 font_16_500 sf_pro_display clr_heading">Last Name</div>
+        <div class="bg_F7F8F8 br_10 height_52 font_14_400 sf_pro_display clr_heading pd_17_16">Last Name</div>
+      </div>
+      <div class="mgt_10">
+        <div class="pd_10 font_16_500 sf_pro_display clr_heading">Email</div>
+        <div class="bg_F7F8F8 br_10 height_52 font_14_400 sf_pro_display clr_heading pd_17_16">username@gmail.com</div>
+      </div>
+      <div class="mgt_10">
+        <div class="pd_10 font_16_500 sf_pro_display clr_heading">Phone Number</div>
+        <div class="bg_F7F8F8 br_10 height_52 font_14_400 sf_pro_display clr_heading pd_17_16">+41256897646</div>
+      </div>
+      <div class="mgt_10">
+        <div class="pd_10 font_16_500 sf_pro_display clr_heading">Location</div>
+        <div class="bg_F7F8F8 br_10 height_52  pd_17_16 flex_center space_between">
+          <div class="font_14_400 sf_pro_display clr_heading">Location</div>
+          <img src="../../assets/images/icons/location_icon.svg" alt="">
+          
+        </div>
+      </div>
+      <div class="mgt_10">
+        <div class="pd_10 font_16_500 sf_pro_display clr_heading">Password</div>
+        <!-- <div class="bg_F7F8F8 br_10 height_52 font_14_400 sf_pro_display clr_heading pd_17_16">agsdehwej</div> -->
+        <div class="bg_F7F8F8 br_10 height_52  pd_17_16 flex_center space_between">
+          <div class="font_14_400 sf_pro_display clr_heading">agsdehwej</div>
+          <ion-icon  style="color: #828282;" name="eye" ></ion-icon>
+          <!-- <ion-icon  style="color: #828282;" name="eye-off" *ngIf="showConfirmPassword==true" (click)="toggleGetType('con_pwd')"></ion-icon> -->
+          
+        </div>
+      </div>
+      
+    </div>
+
+    <div class="flex_center space_between mgt_10 ">
+      <div class="font_18_700 sf_pro_display clr_heading">Linked Account</div>
+      <img (click)="goToEditProfile()" src="../../assets/images/icons/edit_info.svg" alt="">
+    </div>
+    <div class="pd_8 mgt_10">
+      <div class="bg_F7F8F8 br_10 height_52  pd_17_16 flex_center space_between">
+        <div class="font_14_400 sf_pro_display clr_heading flex_center"><img class="mgr_20" src="../../assets/images/icons/lg_google_icon.svg" alt=""> Username@gmail.com</div>
+        <img (click)="logout()" src="../../assets/images/icons/remove.svg" alt="">
+        
+      </div>
+    </div>
+  </div>
+</ion-content>
+
+<ion-footer class="ion-no-border">
+  <ion-tabs style="display:contents ;">
+
+    <ion-tab-bar class="ion_tab_bar" slot="bottom">
+
+      <ion-tab-button  class="bg_F7F8F8" (click)="homeTab()">
+        <img src="../../assets/images/tab_icons/home_def.svg" alt="">
+      </ion-tab-button>
+  
+      <ion-tab-button  class="bg_F7F8F8" (click)="exploreTab()">
+        <img src="../../assets/images/tab_icons/explore_def.svg" alt="">
+        
+      </ion-tab-button>
+  
+      <ion-tab-button  class="bg_F7F8F8" (click)="supportTab()">
+        <img src="../../assets/images/tab_icons/support_def.svg" alt="">
+      </ion-tab-button>
+  
+      <ion-tab-button  class="bg_F7F8F8" (click)="profileTab()">
+        <img src="../../assets/images/tab_icons/profile_active.svg" alt="">
+      </ion-tab-button>
+
+    </ion-tab-bar>
+
+  </ion-tabs>
+</ion-footer>

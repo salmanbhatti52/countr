@@ -1,0 +1,58 @@
+<!-- <ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>setup-profile</ion-title>
+  </ion-toolbar>
+</ion-header> -->
+
+<ion-content [fullscreen]="true" class="background_content">
+  <!-- <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">setup-profile</ion-title>
+    </ion-toolbar>
+  </ion-header> -->
+  <div class="container">
+    <div class="center clr_heading top_heading sf_pro_display">Setup Profile</div>
+
+    <div>
+      <div class="input_lbl clr_heading sf_pro_display">First Name</div>
+        <ion-input type="text" inputmode="text" class="sf_pro_display mgt_10" placeholder="First Name"></ion-input>
+        
+      <div class="input_lbl clr_heading sf_pro_display mgt_18">Last Name</div>
+        <ion-input type="text" inputmode="text" class="sf_pro_display mgt_10" placeholder="Last Name"></ion-input>
+
+      <div class="input_lbl clr_heading sf_pro_display mgt_18">Phone Number</div>
+        <ion-input type="tel" inputmode="tel" class="sf_pro_display mgt_10" placeholder="Phone Number"></ion-input>
+
+      <div class="input_lbl clr_heading sf_pro_display mgt_18">Location</div>
+
+      <div class="input_with_icon pdr_18">
+        <ion-input type="search" inputmode="search" class="sf_pro_display " placeholder="Location"></ion-input>
+        <img id="open-modal" src="../../assets/images/icons/location_icon.svg" alt="">
+      </div>
+      
+      <ion-modal class="location_modal" trigger="open-modal" (willDismiss)="onWillDismiss($event)">
+        <ng-template>
+          <ion-content class="background_content">
+            <div class="sub_container">
+              <div>
+                <div class="right">
+                  <img (click)="cancel()" src="../../assets/images/icons/close.svg" alt="">
+                </div>
+                <div class="sf_pro_display font_18_700 center clr_heading">Allow Location Access</div>
+              </div>
+              <div class="sf_pro_display font_14_400 center clr_text">This app wants to access your location. Data on your dashboard will be based on your current location.</div>
+              <div class="flex_center space_between">
+                <ion-button fill="outline" class="btn width_47_per sf_pro_display btn_outline_primary">Skip</ion-button>
+                <ion-button class="btn sf_pro_display width_47_per btn_solid_primary" >Allow</ion-button>
+              </div>
+            </div>
+          </ion-content>
+        </ng-template>
+      </ion-modal>
+    </div>
+
+    <div>
+      <ion-button (click)="saveProfile()" expand="block" size="large" class="btn sf_pro_display btn_solid_primary ">Complete</ion-button>
+    </div>
+  </div>
+</ion-content>
