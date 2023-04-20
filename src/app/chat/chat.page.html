@@ -1,0 +1,79 @@
+<ion-header [translucent]="true" class="ion-no-border cheader">
+  <ion-toolbar style="--background: #fff;">
+    <ion-row style="padding: 25px 0px 0px">
+      <ion-col size="0.3"></ion-col>
+      <ion-col size="2">
+        <ion-buttons (click)="goBack()">
+          <div style="width:100%;">
+            <img src="../../assets/images/icons/back_arrow.svg">
+          </div>
+        </ion-buttons>
+      </ion-col>
+      <ion-col size="7" style="text-align: center;">
+        <div class="textcenter sf_pro_display">{{otherusername}}</div>
+      </ion-col>
+      <ion-col size="2.6" style="text-align: end;">
+      </ion-col>
+
+    </ion-row>
+  </ion-toolbar>
+
+</ion-header>
+
+<ion-content style="--background: #fff;">
+  <div class="container">
+    <ng-container>
+      <div class="chat" style="display: grid; grid-row-gap: 4px" no-lines *ngFor="let chat of messages">
+        <ng-container>
+          <div class="reciever_message_cont" *ngIf="chat.userloggedId!=loggedid">
+            <div class="reciever">
+              <div class="textMessage EudoxusSansReg">
+                {{chat.message}}
+              </div>
+              <div class="messageTime EudoxusSansReg">{{chat.time}}</div>
+            </div>
+
+          </div>
+
+          <div class="sender_message_container" *ngIf="chat.userloggedId==loggedid">
+            <div class="senderMessage">
+              <div class="textMessage EudoxusSansReg">
+                {{chat.message}}
+              </div>
+              <div class="messageTime EudoxusSansReg">{{chat.time}}</div>
+            </div>
+
+          </div>
+        </ng-container>
+      </div>
+    </ng-container>
+
+  </div>
+</ion-content>
+<ion-footer style="padding-bottom: 10px;
+background: #F7F8F8;" class="ion-no-margin ion-no-padding ion-no-border">
+
+
+  <div style="background: #F7F8F8;
+  border: 1.5px solid #F7F8F8;
+  border-radius: 24px;
+  padding: 3px 5px;
+  width: 95%;
+  margin: 0% auto;">
+
+    <ion-row>
+      <ion-col size="10" style="padding-top: 0px;">
+        <ion-textarea class="input" rows="1" cols="20" placeholder="Enter message here" (keypress)="userTyping($event)"
+          [(ngModel)]="message" style="--padding-bottom: 2px !important;">
+        </ion-textarea>
+      </ion-col>
+
+      <ion-col size="2" style="text-align: right; padding-right: 13px;padding-top:13px">
+        <img src="../../assets/images/send.svg" (click)="sendMessage()">
+      </ion-col>
+    </ion-row>
+  </div>
+
+
+
+</ion-footer>

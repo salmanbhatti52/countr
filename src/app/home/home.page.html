@@ -1,13 +1,29 @@
 <ion-header [translucent]="true" class="ion-no-border">
   <ion-toolbar class="bg_toolbar">
-    <div class="header_padding">
+    <ion-row style="padding: 25px 0px 0px">
+      <ion-col size="0.3"></ion-col>
+      <ion-col size="2">
+
+      </ion-col>
+      <ion-col size="7" style="text-align: center;padding: 0px;">
+        <div class="toolbar_heading clr_heading sf_pro_display">Welcome</div>
+      </ion-col>
+      <ion-col size="2.6" style="text-align: end;right: 15px;">
+        <img (click)="user.goToNotifications()" src="assets/images/icons/bell_icon.svg">
+      </ion-col>
+
+    </ion-row>
+    <!-- <div class="header_padding">
       <div class="header">
         <img src="../../assets/images/icons/side_menu_icon.svg" alt="">
         <div class="toolbar_heading clr_heading sf_pro_display">Welcome</div>
+
         <img (click)="user.goToNotifications()" src="../../assets/images/icons/bell_icon.svg" alt="">
+
+
       </div>
-    </div>
-    
+    </div> -->
+
   </ion-toolbar>
 </ion-header>
 
@@ -20,26 +36,27 @@
 
   <div class="container pos_relative">
     <div class="searchbar_padding">
-      <ion-searchbar [debounce]="1000" 
-      (ionChange)="handleChange($event)" type="text"
-      show-clear-button="always" class="sf_pro_display search_bar" 
-      placeholder="" (ionClear)="clearResult()">
+      <ion-searchbar [debounce]="1000" (ionChange)="handleChange($event)" type="text" show-clear-button="always"
+        class="sf_pro_display search_bar" placeholder="" (ionClear)="clearResult()">
       </ion-searchbar>
     </div>
 
     <div class="font_18_700 sf_pro_display clr_heading mgt_18">Top Categories</div>
 
-    <div style="padding-left: 11px;" class="mgt_18">
-      <swiper [config]="{slidesPerView:3.4, spaceBetween:18, initialSlide:0, speed:400}" [pagination]="false" style="padding: 8px;">
-        <ng-template swiperSlide class="categories">
+    <div class="mgt_18">
+      <swiper [config]="{slidesPerView:3.4, spaceBetween:18, initialSlide:0, speed:400}" [pagination]="false"
+        style="padding: 8px;">
+        <ng-template swiperSlide class="categories" *ngFor="let item of categories">
           <div class="center">
             <div>
-              <img src="../../assets/images/tech.svg" alt="">
+              <img src="https://countr.eigix.net/public/{{item.image}}" style="width: 60px;
+              border-radius: 90px;
+              height: 60px;">
             </div>
-            <div class="font_14_400 sf_pro_display clr_heading">Technology</div>
+            <div class="font_14_400 sf_pro_display clr_heading">{{item.name}}</div>
           </div>
         </ng-template>
-        <ng-template swiperSlide class="categories">
+        <!-- <ng-template swiperSlide class="categories">
           <div class="center">
             <div>
               <img src="../../assets/images/entertainment.svg" alt="">
@@ -62,8 +79,8 @@
             </div>
             <div class="font_14_400 sf_pro_display clr_heading">Education</div>
           </div>
-        </ng-template>
-       
+        </ng-template> -->
+
       </swiper>
     </div>
 
@@ -73,55 +90,57 @@
     </div>
 
     <div class=" mgt_20 ">
-        <div class="flex_center space_between card_header pd_12">
-          <div>
-            <div class="font_14_500 clr_heading sf_pro_display">What type of food do you like most?</div>
-            <div class="font_12_500 clr_text sf_pro_display flex_center mgt_8">( 1 Question ) <img class="mgl_8 mgr_6" src="../../assets/images/icons/time_icon.svg" alt=""> 10 min</div>
-          </div>
-          <div class="right">
-            <ion-button class="small_btn card_btn font_14_400 sf_pro_display" fill="outline" >Food</ion-button>
-            
-            <div class="flex_center font_12_500 sf_pro_display clr_text mgt_7">
-              <img class="mgr_6" src="../../assets/images/icons/reward_icon.svg" alt="">
-              10 points
-            </div>
-          </div>
+      <div class="flex_center space_between card_header pd_12">
+        <div>
+          <div class="font_14_500 clr_heading sf_pro_display">What type of food do you like most?</div>
+          <div class="font_12_500 clr_text sf_pro_display flex_center mgt_8">( 1 Question ) <img class="mgl_8 mgr_6"
+              src="../../assets/images/icons/time_icon.svg" alt=""> 10 min</div>
         </div>
+        <div class="right">
+          <ion-button class="small_btn card_btn font_14_400 sf_pro_display" fill="outline">Food</ion-button>
 
-        <div class="pd_10 card1_con_bg">
-          <div class="flex_center space_between card_con1_choice"  (click)='updateChoice(1)'>
-            <div class="sf_pro_display font_14_400 clr_heading">Chinese</div>
-            <div>
-              <img *ngIf="choice1==true" src="../../assets/images/icons/radio_colored.svg" alt="">
-              <img *ngIf="choice1==false" src="../../assets/images/icons/radio_empty.svg" alt="">
-            </div>
-          </div>
-          <div class="flex_center space_between card_con1_choice mgt_10" (click)='updateChoice(2)'>
-            <div class="sf_pro_display font_14_400 clr_heading">Italian</div>
-            <div>
-              <img *ngIf="choice2==true"  src="../../assets/images/icons/radio_colored.svg" alt="">
-              <img *ngIf="choice2==false" src="../../assets/images/icons/radio_empty.svg" alt="">
-            </div>
-          </div>
-          <div class="flex_center space_between card_con1_choice mgt_10" (click)='updateChoice(3)'>
-            <div class="sf_pro_display font_14_400 clr_heading">Fast Food</div>
-            <div>
-              <img *ngIf="choice3==true" src="../../assets/images/icons/radio_colored.svg" alt="">
-              <img *ngIf="choice3==false" src="../../assets/images/icons/radio_empty.svg" alt="">
-            </div>
+          <div class="flex_center font_12_500 sf_pro_display clr_text mgt_7">
+            <img class="mgr_6" src="../../assets/images/icons/reward_icon.svg" alt="">
+            10 points
           </div>
         </div>
+      </div>
+
+      <div class="pd_10 card1_con_bg">
+        <div class="flex_center space_between card_con1_choice" (click)='updateChoice(1)'>
+          <div class="sf_pro_display font_14_400 clr_heading">Chinese</div>
+          <div>
+            <img *ngIf="choice1==true" src="../../assets/images/icons/radio_colored.svg" alt="">
+            <img *ngIf="choice1==false" src="../../assets/images/icons/radio_empty.svg" alt="">
+          </div>
+        </div>
+        <div class="flex_center space_between card_con1_choice mgt_10" (click)='updateChoice(2)'>
+          <div class="sf_pro_display font_14_400 clr_heading">Italian</div>
+          <div>
+            <img *ngIf="choice2==true" src="../../assets/images/icons/radio_colored.svg" alt="">
+            <img *ngIf="choice2==false" src="../../assets/images/icons/radio_empty.svg" alt="">
+          </div>
+        </div>
+        <div class="flex_center space_between card_con1_choice mgt_10" (click)='updateChoice(3)'>
+          <div class="sf_pro_display font_14_400 clr_heading">Fast Food</div>
+          <div>
+            <img *ngIf="choice3==true" src="../../assets/images/icons/radio_colored.svg" alt="">
+            <img *ngIf="choice3==false" src="../../assets/images/icons/radio_empty.svg" alt="">
+          </div>
+        </div>
+      </div>
     </div>
 
     <div class=" mgt_20 ">
       <div class="flex_center space_between card_header pd_12">
         <div>
           <div class="font_14_500 clr_heading sf_pro_display">What are the qualities of a good PC?</div>
-          <div class="font_12_500 clr_text sf_pro_display flex_center mgt_8">( 1 Question ) <img class="mgl_8 mgr_6" src="../../assets/images/icons/time_icon.svg" alt=""> 10 min</div>
+          <div class="font_12_500 clr_text sf_pro_display flex_center mgt_8">( 1 Question ) <img class="mgl_8 mgr_6"
+              src="../../assets/images/icons/time_icon.svg" alt=""> 10 min</div>
         </div>
         <div class="right">
-          <ion-button class="small_btn card_btn font_14_400 sf_pro_display" fill="outline" >Tech</ion-button>
-          
+          <ion-button class="small_btn card_btn font_14_400 sf_pro_display" fill="outline">Tech</ion-button>
+
           <div class="flex_center font_12_500 sf_pro_display clr_text mgt_7">
             <img class="mgr_6" src="../../assets/images/icons/reward_icon.svg" alt="">
             10 points
@@ -131,14 +150,16 @@
 
       <div class="pd_10 card2_con_bg ">
         <!-- <div class="textarea_div"> -->
-          <textarea placeholder="Type your answer here" class="font_14_500 sf_pro_display bg_white width_100_per text_area card2_textarea_height" name="" id="" cols="30" rows="5"></textarea>
-          <!-- <ion-textarea class="font_14_500 sf_pro_display" auto-grow="true"  rows="2" cols="20" type="text" placeholder="Type your answer here" (ionInput)="sendText()"></ion-textarea> -->
+        <textarea placeholder="Type your answer here"
+          class="font_14_500 sf_pro_display bg_white width_100_per text_area card2_textarea_height" name="" id=""
+          cols="30" rows="5"></textarea>
+        <!-- <ion-textarea class="font_14_500 sf_pro_display" auto-grow="true"  rows="2" cols="20" type="text" placeholder="Type your answer here" (ionInput)="sendText()"></ion-textarea> -->
         <!-- </div> -->
-        
+
       </div>
-      
+
     </div>
-    
+
     <img id="open-modal" class="pos_absolute" src="../../assets/images/help.svg" alt="">
     <ion-modal class="help_modal" trigger="open-modal" (willDismiss)="onWillDismiss($event)">
       <ng-template>
@@ -148,17 +169,20 @@
               <div class="right">
                 <img (click)="cancel()" src="../../assets/images/icons/close.svg" alt="">
               </div>
-              <div ><span class="bg_primary br_8 pd_12_9 clr_white sf_pro_display font_10_400">Hi! how can i help you?</span> </div>
+              <div><span class="bg_primary br_8 pd_12_9 clr_white sf_pro_display font_10_400">Hi! how can i help
+                  you?</span> </div>
             </div>
             <div class="flex_center space_between">
-              <textarea placeholder="Type here.." class="font_10_400 sf_pro_display text_area modal_textarea_height width_90_per bg_F7F8F8 br_8" name="" id="" cols="30" rows="3"></textarea>
+              <textarea placeholder="Type here.."
+                class="font_10_400 sf_pro_display text_area modal_textarea_height width_90_per bg_F7F8F8 br_8" name=""
+                id="" cols="30" rows="3"></textarea>
               <img src="../../assets/images/send.svg" alt="">
             </div>
           </div>
         </ion-content>
       </ng-template>
     </ion-modal>
-  
+
   </div>
 </ion-content>
 
@@ -167,20 +191,20 @@
 
     <ion-tab-bar class="ion_tab_bar" slot="bottom">
 
-      <ion-tab-button  class="bg_F7F8F8" (click)="homeTab()">
+      <ion-tab-button class="bg_F7F8F8" (click)="homeTab()">
         <img src="../../assets/images/tab_icons/home_active.svg" alt="">
       </ion-tab-button>
-  
-      <ion-tab-button  class="bg_F7F8F8" (click)="exploreTab()">
+
+      <ion-tab-button class="bg_F7F8F8" (click)="exploreTab()">
         <img src="../../assets/images/tab_icons/explore_def.svg" alt="">
-        
+
       </ion-tab-button>
-  
-      <ion-tab-button  class="bg_F7F8F8" (click)="supportTab()">
+
+      <ion-tab-button class="bg_F7F8F8" (click)="supportTab()">
         <img src="../../assets/images/tab_icons/support_def.svg" alt="">
       </ion-tab-button>
-  
-      <ion-tab-button  class="bg_F7F8F8" (click)="profileTab()">
+
+      <ion-tab-button class="bg_F7F8F8" (click)="profileTab()">
         <img src="../../assets/images/tab_icons/profile_def.svg" alt="">
       </ion-tab-button>
 

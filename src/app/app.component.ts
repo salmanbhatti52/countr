@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 @Component({
   selector: 'app-root',
@@ -19,5 +19,15 @@ export class AppComponent {
     { title: 'Spam', url: '/folder/spam', icon: 'warning' },
   ];
   public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
-  constructor() {}
+  constructor(public router: Router) {
+
+  }
+
+  ngOnInit() {
+    if (localStorage.getItem('loggedId') == null) {
+      this.router.navigate(['welcome'])
+    } else {
+      this.router.navigate(['home'])
+    }
+  }
 }

@@ -12,23 +12,40 @@
   </ion-header> -->
   <div class="container">
     <div class="center clr_heading top_heading sf_pro_display">Follow on Social Media</div>
-    
+
     <div>
-      <div class="center clr_text input_lbl sf_pro_display mgt_15 ">Follow us on social media to complete your onboarding process.</div>
+      <div class="center clr_text input_lbl sf_pro_display mgt_15 ">Follow us on social media to complete your
+        onboarding process.</div>
 
-      <div class="social_item flex_center pd_18 bg_F7F8F8 br_14 font_14_400 mgt_35"><img class="mgr_18" src="../../assets/images/icons/insta_icon.svg" alt=""> <a class="clr_primary" href="https:www.instagram.com/countr">https:www.instagram.com/countr</a> </div>
+      <div *ngFor="let item of socialarr">
+        <div class="social_item flex_center pd_18 bg_F7F8F8 br_14 font_14_400 mgt_35">
+          <img class="mgr_18" src="../../assets/images/icons/insta_icon.svg" *ngIf="item.type=='link_instagram'">
+          <img class="mgr_18" src="../../assets/images/icons/linkedin_icon.svg" *ngIf="item.type=='link_linkedin'">
+          <img class="mgr_18" src="../../assets/images/icons/fb_icon.svg" *ngIf="item.type=='link_facebook'">
+          <img class="mgr_18" src="../../assets/images/icons/twitter_icon.svg" *ngIf="item.type=='link_twitter'">
+          <a class="clr_primary" href="">{{item.description}}</a>
+        </div>
+      </div>
 
-      <div class="social_item flex_center pd_18 bg_F7F8F8 br_14 font_14_400 mgt_30"><img class="mgr_18" src="../../assets/images/icons/linkedin_icon.svg" alt=""> <a class="clr_primary" href="https:www.linkedin.com/countr">https:www.linkedin.com/countr</a> </div>
 
-      <div class="social_item flex_center pd_18 bg_F7F8F8 br_14 font_14_400 mgt_30"><img class="mgr_18" src="../../assets/images/icons/fb_icon.svg" alt=""> <a class="clr_primary" href="https:www.facebook.com/countr">https:www.facebook.com/countr</a> </div>
+      <!-- <div class="social_item flex_center pd_18 bg_F7F8F8 br_14 font_14_400 mgt_30"><img class="mgr_18"
+          src="../../assets/images/icons/linkedin_icon.svg" alt=""> <a class="clr_primary"
+          href="https:www.linkedin.com/countr">https:www.linkedin.com/countr</a> </div>
 
-      <div class="social_item flex_center pd_18 bg_F7F8F8 br_14 font_14_400 mgt_30"><img class="mgr_18" src="../../assets/images/icons/twitter_icon.svg" alt=""> <a class="clr_primary" href="https:www.twitter.com/countr">https:www.twitter.com/countr</a> </div>
+      <div class="social_item flex_center pd_18 bg_F7F8F8 br_14 font_14_400 mgt_30"><img class="mgr_18"
+          src="../../assets/images/icons/fb_icon.svg" alt=""> <a class="clr_primary"
+          href="https:www.facebook.com/countr">https:www.facebook.com/countr</a> </div>
+
+      <div class="social_item flex_center pd_18 bg_F7F8F8 br_14 font_14_400 mgt_30"><img class="mgr_18"
+          src="../../assets/images/icons/twitter_icon.svg" alt=""> <a class="clr_primary"
+          href="https:www.twitter.com/countr">https:www.twitter.com/countr</a> </div> -->
 
     </div>
 
-    <div >
+    <div>
       <div class="pdt_15">
-        <ion-button (click)="gotoHomePage()" expand="block" size="large" class="btn sf_pro_display btn_solid_primary ">Next</ion-button>
+        <ion-button (click)="gotoHomePage()" expand="block" size="large"
+          class="btn sf_pro_display btn_solid_primary ">Next</ion-button>
       </div>
       <div class="mgt_15 input_lbl center">
         <span (click)="gotoHomePage()" class="clr_primary underline_text sf_pro_display">Skip</span>

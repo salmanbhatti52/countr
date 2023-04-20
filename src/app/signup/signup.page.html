@@ -12,49 +12,57 @@
   </ion-header> -->
 
   <div class="container">
-    
+
     <div>
       <div class="top_heading sf_pro_display clr_white center">Signup</div>
       <div class="mgt_18">
         <div class="input_lbl clr_white sf_pro_display">Email</div>
-        <ion-input type="email" inputmode="email" class="sf_pro_display mgt_10" placeholder="Email"></ion-input>
+        <ion-input type="email" inputmode="email" class="sf_pro_display mgt_10" placeholder="Email"
+          [(ngModel)]="email"></ion-input>
       </div>
-      
+
       <div>
         <div class="input_lbl clr_white sf_pro_display mgt_15">Password</div>
-        
+
         <div class="input_with_icon pdr_18">
-          <ion-input type="{{getPwdType}}" inputmode="text" class="sf_pro_display" placeholder="*******"></ion-input>
-          <ion-icon  style="color: #828282;" name="eye" *ngIf="showPassword==false" (click)="toggleGetType('pwd')"></ion-icon>
-          <ion-icon  style="color: #828282;" name="eye-off" *ngIf="showPassword==true" (click)="toggleGetType('pwd')"></ion-icon>
+          <ion-input type="{{getPwdType}}" inputmode="text" class="sf_pro_display" placeholder="*******"
+            [(ngModel)]="password"></ion-input>
+          <ion-icon style="color: #828282;" name="eye" *ngIf="showPassword==false"
+            (click)="toggleGetType('pwd')"></ion-icon>
+          <ion-icon style="color: #828282;" name="eye-off" *ngIf="showPassword==true"
+            (click)="toggleGetType('pwd')"></ion-icon>
         </div>
       </div>
-      
+
       <div>
         <div class="input_lbl clr_white sf_pro_display mgt_15">Confirm Password</div>
-        
+
         <div class="input_with_icon pdr_18">
-          <ion-input type="{{getConPwdType}}" inputmode="text" class="sf_pro_display" placeholder="*******"></ion-input>
-          <ion-icon  style="color: #828282;" name="eye" *ngIf="showConfirmPassword==false" (click)="toggleGetType('con_pwd')"></ion-icon>
-          <ion-icon  style="color: #828282;" name="eye-off" *ngIf="showConfirmPassword==true" (click)="toggleGetType('con_pwd')"></ion-icon>
+          <ion-input type="{{getConPwdType}}" inputmode="text" class="sf_pro_display" placeholder="*******"
+            [(ngModel)]="Confirmpassword"></ion-input>
+          <ion-icon style="color: #828282;" name="eye" *ngIf="showConfirmPassword==false"
+            (click)="toggleGetType('con_pwd')"></ion-icon>
+          <ion-icon style="color: #828282;" name="eye-off" *ngIf="showConfirmPassword==true"
+            (click)="toggleGetType('con_pwd')"></ion-icon>
         </div>
       </div>
 
       <div>
         <div class="input_lbl clr_white sf_pro_display mgt_15">Country</div>
-        <ion-select class="ion_select sf_pro_display mgt_10" placeholder="Select Country" (ionChange)="chooseCountry($event)">
-          <ion-select-option *ngFor="let country of countries" [value]="country" class="sf_pro_display">{{country.name}}</ion-select-option>
+        <ion-select class="ion_select sf_pro_display mgt_10" placeholder="Select Country"
+          (ionChange)="chooseCountry($event)">
+          <ion-select-option *ngFor="let country of countries" [value]="country"
+            class="sf_pro_display">{{country.name}}</ion-select-option>
         </ion-select>
       </div>
-      
+
       <div>
         <div class="input_lbl clr_white sf_pro_display mgt_15">State</div>
-        <ion-select class="ion_select sf_pro_display mgt_10" placeholder="Select State" (ionChange)="selectedState($event)">
-          <div *ngIf="states.length > 0" >
-            <ion-select-option *ngFor="let state of states" [value]="state" class="sf_pro_display">{{state.name}}</ion-select-option>
-          </div>
-          <div *ngIf="states.length == 0">
-            <ion-select-option  class="sf_pro_display">No State Found</ion-select-option>
+        <ion-select class="ion_select sf_pro_display mgt_10" placeholder="Select State"
+          (ionChange)="selectedState($event)">
+          <div>
+            <ion-select-option *ngFor="let state of states" [value]="state"
+              class="sf_pro_display">{{state.name}}</ion-select-option>
           </div>
         </ion-select>
       </div>
@@ -68,19 +76,22 @@
       <div class="incre_decre_div">
         <ion-button (click)="decreaseCount()" class="incre_decre_btn sf_pro_display" size="small">-</ion-button>
         <div class="btn_value sf_pro_display">{{count}}</div>
-        <ion-button (click)="increaseCount()" class="incre_decre_btn sf_pro_display" size="small" >+</ion-button>
+        <ion-button (click)="increaseCount()" class="incre_decre_btn sf_pro_display" size="small">+</ion-button>
       </div>
     </div>
 
     <div class="mgt_40">
       <div>
-        <ion-button expand="block" size="large" class="btn sf_pro_display btn_solid_primary" (click)="startIntro()">Signup</ion-button>
+        <ion-button expand="block" size="large" class="btn sf_pro_display btn_solid_primary"
+          (click)="startIntro()">Signup</ion-button>
       </div>
       <div>
-        <ion-button expand="block" fill="outline" size="large" class="btn sf_pro_display btn_outline_primary"><img class="mgr_10" src="../../assets/images/icons/google_icon.svg" alt=""> Signup With Google</ion-button>
+        <ion-button expand="block" fill="outline" size="large" class="btn sf_pro_display btn_outline_primary"><img
+            class="mgr_10" src="../../assets/images/icons/google_icon.svg" alt=""> Signup With Google</ion-button>
       </div>
       <div class="mgt_15 input_lbl center">
-        <span class="clr_white mgr_4 sf_pro_display">Already have an account?</span> <span (click)="goForLogin()" class="clr_primary underline_text sf_pro_display">Login</span>
+        <span class="clr_white mgr_4 sf_pro_display">Already have an account?</span> <span (click)="goForLogin()"
+          class="clr_primary underline_text sf_pro_display">Login</span>
       </div>
     </div>
 

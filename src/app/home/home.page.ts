@@ -1,4 +1,4 @@
-import { Component, OnInit,ViewChild  } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
@@ -9,6 +9,8 @@ import { Router } from '@angular/router';
 import { UserService } from '../api/user.service';
 import { IonModal } from '@ionic/angular';
 import { OverlayEventDetail } from '@ionic/core/components';
+import { ApiService } from '../services/api.service';
+import { ExtraService } from '../services/extra.service';
 
 SwiperCore.use([Autoplay, Keyboard, Pagination, Scrollbar, Zoom, IonicSlides]);
 @Component({
@@ -16,24 +18,34 @@ SwiperCore.use([Autoplay, Keyboard, Pagination, Scrollbar, Zoom, IonicSlides]);
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule,SwiperModule]
+  imports: [IonicModule, CommonModule, FormsModule, SwiperModule]
 })
 export class HomePage implements OnInit {
   @ViewChild(IonModal) modal!: IonModal;
   choice1 = false;
   choice2 = true;
   choice3 = false;
-  constructor(public router:Router,
-    public user:UserService) { }
+  categories: any;
+  constructor(public router: Router,
+    public user: UserService,
+    public api: ApiService,
+    public extra: ExtraService) { }
 
   ngOnInit() {
-    
+
   }
 
-  ionViewWillEnter(){
+  ionViewWillEnter() {
     this.user.loginVal = true;
+    this.getCategories()
   }
 
+  getCategories() {
+    this.api.getRequest('survey_categories').subscribe((res: any) => {
+      console.log('categoreis=====', res);
+      this.categories = res.data
+    })
+  }
   cancel() {
     this.modal.dismiss(null, 'cancel');
   }
@@ -49,36 +61,36 @@ export class HomePage implements OnInit {
     // }
   }
 
-  updateChoice(val:any){
-    if(val == 1){
+  updateChoice(val: any) {
+    if (val == 1) {
       this.choice1 = true;
       this.choice2 = false;
       this.choice3 = false;
-    }else if(val == 2){
+    } else if (val == 2) {
       this.choice1 = false;
       this.choice2 = true;
       this.choice3 = false;
-    }else{
+    } else {
       this.choice1 = false;
       this.choice2 = false;
       this.choice3 = true;
     }
   }
 
-  sendText(){
-    
+  sendText() {
+
   }
 
-  handleChange(event:any){
+  handleChange(event: any) {
     // this.result = []
     // console.log('Event: ',event);
-    
+
     // const query = event.target.value.toLowerCase();
     // console.log('query: ',query);
 
     // if(query == ''){
     //   this.showContent = true;
-      
+
     // }
     // if(query != ''){
     //   let data = {
@@ -99,36 +111,36 @@ export class HomePage implements OnInit {
     //       }
 
     //     }else{
-  
+
     //     }
-        
+
     //   },(err)=>{
     //     this.api.hideLoading();
     //     console.log("API Call Error: ",err);
-        
+
     //   })
     // }
-    
+
   }
-  
-  clearResult(){
+
+  clearResult() {
     // this.result = []
     // this.showContent = true;
   }
 
-  homeTab(){
+  homeTab() {
     this.router.navigate(['/home']);
   }
 
-  exploreTab(){
+  exploreTab() {
     this.router.navigate(['/explore']);
   }
 
-  supportTab(){
+  supportTab() {
     this.router.navigate(['/customer-support']);
   }
-  
-  profileTab(){
+
+  profileTab() {
     this.router.navigate(['/profile']);
   }
 

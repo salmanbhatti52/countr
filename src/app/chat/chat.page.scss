@@ -1,0 +1,75 @@
+.textcenter{
+  font-size: 24px;
+  font-weight: 600;
+  color: #404142;
+  text-align: center;
+  margin-left: 5%;
+}
+
+.container {
+  width: 90%;
+  margin: 0% auto 5%;
+}
+
+
+.chat {
+  margin-top: 5px;
+}
+.reciever {
+  color: #404142;
+  font-size: 14px;
+  border-radius: 25px 25px 25px 25px;
+  width: auto;
+  padding: 15px;
+  text-align: justify;
+  max-width: 250px;
+  white-space: pre-line;
+  background: #F7F8F8;
+  font-weight: 400;
+}
+.messageTime {
+  font-size: 10px;
+  color: #7F8183;
+  margin-top: 4%;
+}
+.messageTimeSender {
+  font-size: 10px;
+  color: #3C3744;
+  text-align: end;
+}
+.sender_message_container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+.senderMessage {
+  color: #404142;
+  font-size: 14px;
+  border-radius: 25px 25px 25px 25px;
+  width: auto;
+  padding: 15px;
+  text-align: justify;
+  max-width:250px;
+  white-space: pre-line;
+  background: #F7F8F8;
+  margin-top: 20px;
+}
+
+
+.reciever_message_cont {
+  display: grid;
+  justify-content: flex-start;
+}
+ion-textarea{
+  --padding-top: 5px !important;
+  --padding-end: 0 !important;
+  --padding-bottom: 5px !important;
+}
+.input{
+  color: #404142;
+  font-size: 14px;
+  font-weight:400;
+  --placeholder-color:#404142;
+  padding: 10px 0px 4px 10px;
+
+}

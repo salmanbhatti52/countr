@@ -9,21 +9,32 @@
         </div>
       </div>
     </div>
-    
+
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true" class="background_content">
-  <!-- <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">notifications</ion-title>
-    </ion-toolbar>
-  </ion-header> -->
-  <div class="container">
+  <div class="flex-c">
+    <div>
+      <div class="text1">Notification</div>
+      <div class="text2">Enable Notification</div>
+    </div>
+
+    <ion-toggle class="ctoggle" (ionChange)="changed($event)" *ngIf="notichecked=='false'"></ion-toggle>
+    <ion-toggle class="ctoggle" (ionChange)="changed($event)" *ngIf="notichecked=='true'" checked></ion-toggle>
+  </div>
+  <div *ngIf="notilength==0" style="font-weight: 500;
+  font-size: 20px;
+  color: #21333B;
+  text-align: center;
+  background: #F7F8F8;
+  padding: 20px;" class="EudoxusSansReg">No Notification Found</div>
+
+  <div class="container" *ngFor="let item of noti">
+    <div class="sf_pro_display font_14_500 clr_text bg_F7F8F8 pd_14_12 br_14 mgt_14">{{noti.message}}</div>
+    <!-- <div class="sf_pro_display font_14_500 clr_text bg_F7F8F8 pd_14_12 br_14 mgt_14">Donec a eros justo. Fusce egestas tristique ultrices.</div>
     <div class="sf_pro_display font_14_500 clr_text bg_F7F8F8 pd_14_12 br_14 mgt_14">Donec a eros justo. Fusce egestas tristique ultrices.</div>
     <div class="sf_pro_display font_14_500 clr_text bg_F7F8F8 pd_14_12 br_14 mgt_14">Donec a eros justo. Fusce egestas tristique ultrices.</div>
-    <div class="sf_pro_display font_14_500 clr_text bg_F7F8F8 pd_14_12 br_14 mgt_14">Donec a eros justo. Fusce egestas tristique ultrices.</div>
-    <div class="sf_pro_display font_14_500 clr_text bg_F7F8F8 pd_14_12 br_14 mgt_14">Donec a eros justo. Fusce egestas tristique ultrices.</div>
-    <div class="sf_pro_display font_14_500 clr_text bg_F7F8F8 pd_14_12 br_14 mgt_14">Donec a eros justo. Fusce egestas tristique ultrices.</div>
+    <div class="sf_pro_display font_14_500 clr_text bg_F7F8F8 pd_14_12 br_14 mgt_14">Donec a eros justo. Fusce egestas tristique ultrices.</div> -->
   </div>
 </ion-content>

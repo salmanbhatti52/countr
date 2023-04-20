@@ -6,3 +6,34 @@
     // flex-direction: column;
     // justify-content: space-between;
 }
+.flex-c{
+	display: flex;
+	// background: #FFFFFF;
+	border-radius: 25px;
+	padding: 10px 20px;
+	justify-content: space-between;
+	align-items: center;
+}
+.text1{
+	font-size: 16px;
+	font-weight: 700;
+	color: #404142;
+}
+.text2{
+	font-style: normal;
+	font-weight: 700;
+	font-size: 12px;
+	color: #7F8183;
+}
+.ctoggle{
+  --background:#e9f5ec;
+  --handle-background:#DEDEDE;
+  --track-background-checked: #1DA1F2;
+  --handle-height: 22px;
+    --handle-width: 22px;
+    --handle-box-shadow: none;
+    height: 25px;
+    width: 42px;
+    --handle-background-checked: #fff;
+    --handle-spacing: 2px;
+}
