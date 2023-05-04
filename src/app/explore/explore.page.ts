@@ -14,7 +14,7 @@ SwiperCore.use([Autoplay, Keyboard, Pagination, Scrollbar, Zoom, IonicSlides]);
   templateUrl: './explore.page.html',
   styleUrls: ['./explore.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule,SwiperModule]
+  imports: [IonicModule, CommonModule, FormsModule, SwiperModule]
 })
 export class ExplorePage implements OnInit {
   choice1 = false;
@@ -25,38 +25,38 @@ export class ExplorePage implements OnInit {
   slide3 = false;
   slide4 = false;
   slide5 = false;
-  constructor(public router:Router,
-    public user:UserService) { }
+  constructor(public router: Router,
+    public user: UserService) { }
 
   ngOnInit() {
   }
 
-  selectSlide(val:any){
-    if(val == 1){
+  selectSlide(val: any) {
+    if (val == 1) {
       this.slide1 = true;
       this.slide2 = false;
       this.slide3 = false;
       this.slide4 = false;
       this.slide5 = false;
-    }else if(val == 2){
+    } else if (val == 2) {
       this.slide1 = false;
       this.slide2 = true;
       this.slide3 = false;
       this.slide4 = false;
       this.slide5 = false;
-    }else if(val == 3){
+    } else if (val == 3) {
       this.slide1 = false;
       this.slide2 = false;
       this.slide3 = true;
       this.slide4 = false;
       this.slide5 = false;
-    }else if(val == 4){
+    } else if (val == 4) {
       this.slide1 = false;
       this.slide2 = false;
       this.slide3 = false;
       this.slide4 = true;
       this.slide5 = false;
-    }else{
+    } else {
       this.slide1 = false;
       this.slide2 = false;
       this.slide3 = false;
@@ -65,36 +65,36 @@ export class ExplorePage implements OnInit {
     }
   }
 
-  updateChoice(val:any){
-    if(val == 1){
+  updateChoice(val: any) {
+    if (val == 1) {
       this.choice1 = true;
       this.choice2 = false;
       this.choice3 = false;
-    }else if(val == 2){
+    } else if (val == 2) {
       this.choice1 = false;
       this.choice2 = true;
       this.choice3 = false;
-    }else{
+    } else {
       this.choice1 = false;
       this.choice2 = false;
       this.choice3 = true;
     }
   }
 
-  sendText(){
-    
+  sendText() {
+
   }
 
-  handleChange(event:any){
+  handleChange(event: any) {
     // this.result = []
     // console.log('Event: ',event);
-    
+
     // const query = event.target.value.toLowerCase();
     // console.log('query: ',query);
 
     // if(query == ''){
     //   this.showContent = true;
-      
+
     // }
     // if(query != ''){
     //   let data = {
@@ -115,36 +115,36 @@ export class ExplorePage implements OnInit {
     //       }
 
     //     }else{
-  
+
     //     }
-        
+
     //   },(err)=>{
     //     this.api.hideLoading();
     //     console.log("API Call Error: ",err);
-        
+
     //   })
     // }
-    
+
   }
-  
-  clearResult(){
+
+  clearResult() {
     // this.result = []
     // this.showContent = true;
   }
 
-  homeTab(){
+  homeTab() {
     this.router.navigate(['/home']);
   }
 
-  exploreTab(){
+  exploreTab() {
     this.router.navigate(['/explore']);
   }
 
-  supportTab(){
-    this.router.navigate(['/customer-support']);
+  supportTab() {
+    this.router.navigate(['/blog']);
   }
-  
-  profileTab(){
+
+  profileTab() {
     this.router.navigate(['/profile']);
   }
 }

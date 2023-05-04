@@ -26,6 +26,17 @@ export class HomePage implements OnInit {
   choice2 = true;
   choice3 = false;
   categories: any;
+
+  ans = [{ ans1: 'chinese' }, { ans1: 'Itlian' }, { ans1: 'tokoyo' }]
+  surveylists: any;
+  answers: any;
+  questionlist: any;
+  selectedOption: any;
+  isdown = false;
+  selectedValue: any = '';
+  currentIndex = 0;
+  questionname: any;
+  questionslength = 0;
   constructor(public router: Router,
     public user: UserService,
     public api: ApiService,
@@ -38,6 +49,7 @@ export class HomePage implements OnInit {
   ionViewWillEnter() {
     this.user.loginVal = true;
     this.getCategories()
+    this.getsurveylists()
   }
 
   getCategories() {
@@ -46,6 +58,78 @@ export class HomePage implements OnInit {
       this.categories = res.data
     })
   }
+  getsurveylists() {
+    this.api.getRequest('survey_list_top').subscribe((res: any) => {
+      console.log('survey_list_top=====', res);
+      this.surveylists = res.data
+    })
+  }
+  selectsurvey(val: any, index: any) {
+    console.log('current adadsad,', this.currentIndex);
+    if (this.currentIndex >= this.questionslength) {
+      alert('hellow222' + ' ' + this.questionslength)
+      this.currentIndex = 0;
+    }
+
+    console.log(val);
+
+    this.api.sendRequest('survey_list_questions', { "survey_list_id": val.survey_list_id }).subscribe((res: any) => {
+      console.log('survey_list_questions=====', res);
+
+      this.questionlist = res.data
+      this.questionslength = this.questionlist.length
+      this.answers = this.questionlist[this.currentIndex].answers
+
+      // console.log(this.answers);
+      // this.questionname = this.answers.name
+      // this.questionlist[index].isdown = !(this.questionlist[index].isdown);
+      // res.data.forEach((ele: any) => {
+      //   // console.log(ele.answers);
+      //   // let vales = ele.answers
+      //   // vales.forEach((resval: any) => {
+      //   //   resval.value = false;
+
+      //   // });
+
+
+      // });
+
+
+    })
+  }
+  mcqAnswer(ev: any) {
+    console.log(ev);
+    this.selectedValue = ev.detail.value
+    // if (this.currentIndex < this.answers.length - 1) {
+    //   this.currentIndex++;
+    // }
+    console.log('question length', this.questionslength);
+
+    if (this.currentIndex >= this.questionslength) {
+      alert('hellow' + ' ' + this.questionslength)
+      this.currentIndex = 0;
+    } else {
+      this.currentIndex++;
+    }
+
+  }
+  getanswersvalues(val: any, index: any) {
+    console.log('item obj====', val);
+
+
+  }
+  goto() {
+    if (this.currentIndex < this.questionlist.length) {
+      this.currentIndex++;
+    }
+    else {
+      this.currentIndex = 0;
+    }
+
+
+
+  }
+
   cancel() {
     this.modal.dismiss(null, 'cancel');
   }
@@ -80,6 +164,7 @@ export class HomePage implements OnInit {
   sendText() {
 
   }
+
 
   handleChange(event: any) {
     // this.result = []
@@ -137,7 +222,7 @@ export class HomePage implements OnInit {
   }
 
   supportTab() {
-    this.router.navigate(['/customer-support']);
+    this.router.navigate(['/blog']);
   }
 
   profileTab() {

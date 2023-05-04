@@ -5,15 +5,16 @@ import { Location } from '@angular/common';
   providedIn: 'root'
 })
 export class UserService {
-loginVal = false;
+  loginVal = false;
+  googleuserdetail: any;
   constructor(public router: Router,
-    public location:Location) { }
+    public location: Location) { }
 
-  goToNotifications(){
+  goToNotifications() {
     this.router.navigate(['/notifications']);
   }
 
-  goBack(){
+  goBack() {
     this.location.back();
   }
 }

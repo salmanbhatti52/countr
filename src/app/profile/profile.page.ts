@@ -81,7 +81,7 @@ export class ProfilePage implements OnInit {
   }
 
   supportTab() {
-    this.router.navigate(['/customer-support']);
+    this.router.navigate(['/blog']);
   }
 
   profileTab() {

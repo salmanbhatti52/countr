@@ -8,6 +8,22 @@
     flex-direction: column;
     justify-content: space-between;
 }
+.itemcls{
+  border-radius: 14px;
+  margin-bottom: 10px;
+  --inner-padding-top: 8px;
+  --inner-padding-bottom: 8px;
+}
+
+
+ion-radio.ios {
+  width: 20px;
+  height: 20px;
+
+  border: 2px solid #ddd;
+  border-radius: 4px;
+}
+
 
 // ion-textarea{
 //     --placeholder-color: #A1A3A4 !important;

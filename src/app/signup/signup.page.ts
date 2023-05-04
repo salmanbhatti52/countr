@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
+import { IonicModule, MenuController } from '@ionic/angular';
 import { Country, State, City } from 'country-state-city';
 import { ICountry, IState, ICity } from 'country-state-city'
 import { log } from 'console';
@@ -36,9 +36,18 @@ export class SignupPage implements OnInit {
 
   system_states_id: any;
   constructor(public router: Router,
+    public menuCtrl: MenuController,
     public api: ApiService,
     public extra: ExtraService) {
 
+  }
+
+  ionViewDidEnter() {
+    this.menuCtrl.enable(false);
+  }
+  ionViewWillLeave() {
+    // enable the root left menu when leaving this page
+    this.menuCtrl.enable(true);
   }
 
   ionViewWillEnter() {
@@ -51,8 +60,10 @@ export class SignupPage implements OnInit {
 
   }
   getcountries() {
+    this.extra.loadershow()
     this.api.getRequest('system_countries').subscribe((res: any) => {
       console.log('countr====', res);
+      this.extra.hideLoader()
       this.countries = res.data
     })
   }
@@ -66,6 +77,7 @@ export class SignupPage implements OnInit {
   increaseCount() {
     this.count++;
   }
+
 
   chooseCountry(ev: any) {
     this.selectedCountry = ev.detail.value;

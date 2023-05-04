@@ -24,7 +24,7 @@
       <div class="input_lbl clr_white sf_pro_display mgt_25">Password</div>
       <ion-input type="password" inputmode="text" class="sf_pro_display mgt_10" placeholder="*******"
         [(ngModel)]="password"></ion-input>
-      <div class="mgt_20 input_lbl">
+      <div class="mgt_20 input_lbl" (click)="forgot()">
         <span class="clr_white mgr_4 sf_pro_display">Forgot password?</span> <span
           class="clr_primary underline_text sf_pro_display">Reset</span>
       </div>
@@ -35,7 +35,7 @@
         <ion-button expand="block" size="large" class="btn sf_pro_display btn_solid_primary"
           (click)="login()">Login</ion-button>
       </div>
-      <div>
+      <div (click)="Loginwithgoogle()">
         <ion-button expand="block" fill="outline" size="large" class="btn sf_pro_display btn_outline_primary"><img
             class="mgr_10" src="../../assets/images/icons/google_icon.svg" alt=""> Login With Google</ion-button>
       </div>

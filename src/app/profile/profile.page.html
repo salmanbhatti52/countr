@@ -1,9 +1,15 @@
 <ion-header [translucent]="true" class="ion-no-border">
   <ion-toolbar class="bg_toolbar">
-    <ion-row style="padding: 25px 0px 0px">
+    <ion-row style="padding:10px 0px 0px;align-items: center;">
       <ion-col size="0.3"></ion-col>
       <ion-col size="2">
-
+        <ion-menu-toggle>
+          <ion-buttons>
+            <div style="width: 100%">
+              <img src="assets/images/icons/side_menu_icon.svg">
+            </div>
+          </ion-buttons>
+        </ion-menu-toggle>
       </ion-col>
       <ion-col size="7" style="text-align: center;padding: 0px;">
         <div class="toolbar_heading clr_heading sf_pro_display">Profile</div>
@@ -57,7 +63,7 @@
     <div class=" mgt_10" style="display: flex;
     align-items: center;
     justify-content: space-between;">
-      <div class="mgr_6 sf_pro_display font_14_400 clr_primary" (click)="logout()">Logout</div>
+      <!-- <div class="mgr_6 sf_pro_display font_14_400 clr_primary" (click)="logout()">Logout</div> -->
       <div>
         <span (click)="goToUpcomingRewards()" class="mgr_6 sf_pro_display font_14_400 clr_primary">Upcoming Rewards
         </span> <img (click)="goToUpcomingRewards()" src="../../assets/images/icons/arrow_2.svg" alt="">
@@ -96,16 +102,15 @@
 
         </div>
       </div>
-      <div class="mgt_10">
+      <!-- <div class="mgt_10">
         <div class="pd_10 font_16_500 sf_pro_display clr_heading">Password</div>
-        <!-- <div class="bg_F7F8F8 br_10 height_52 font_14_400 sf_pro_display clr_heading pd_17_16">agsdehwej</div> -->
+
         <div class="bg_F7F8F8 br_10 height_52  pd_17_16 flex_center space_between">
           <div class="font_14_400 sf_pro_display clr_heading">{{password}}</div>
           <ion-icon style="color: #828282;" name="eye"></ion-icon>
-          <!-- <ion-icon  style="color: #828282;" name="eye-off" *ngIf="showConfirmPassword==true" (click)="toggleGetType('con_pwd')"></ion-icon> -->
 
         </div>
-      </div>
+      </div> -->
 
     </div>
 
@@ -139,7 +144,7 @@
       </ion-tab-button>
 
       <ion-tab-button class="bg_F7F8F8" (click)="supportTab()">
-        <img src="../../assets/images/tab_icons/support_def.svg" alt="">
+        <img src="../../assets/images/tab_icons/eco.svg" alt="">
       </ion-tab-button>
 
       <ion-tab-button class="bg_F7F8F8" (click)="profileTab()">

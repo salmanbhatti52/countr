@@ -66,5 +66,25 @@ export const routes: Routes = [
     path: 'chat',
     loadComponent: () => import('./chat/chat.page').then( m => m.ChatPage)
   },
+  {
+    path: 'forgotpassword',
+    loadComponent: () => import('./forgotpassword/forgotpassword.page').then( m => m.ForgotpasswordPage)
+  },
+  {
+    path: 'otp',
+    loadComponent: () => import('./otp/otp.page').then( m => m.OtpPage)
+  },
+  {
+    path: 'resetpassword',
+    loadComponent: () => import('./resetpassword/resetpassword.page').then( m => m.ResetpasswordPage)
+  },
+  {
+    path: 'blog',
+    loadComponent: () => import('./blog/blog.page').then( m => m.BlogPage)
+  },
+  {
+    path: 'changepassword',
+    loadComponent: () => import('./changepassword/changepassword.page').then( m => m.ChangepasswordPage)
+  },
 
 ];

@@ -60,6 +60,14 @@
     src: url('../src/assets/fonts/SFProDisplay-Regular.ttf') format('truetype');
 }
 
+.otp-input{
+  margin: 0px 10px !important;
+  background: #fff !important;
+  border-radius: 130px !important;
+  color: #000 !important;
+  height: 60px !important;
+  width: 60px !important;
+}
 
 .ion_tab_bar{
     // padding: 8px 8px 12px 0px;
@@ -462,7 +470,7 @@
 }
 
 .top_heading{
-    margin-top: 25px;
+    margin-top: 20px;
     font-style: normal;
     font-weight: 700;
     font-size: 28px;
@@ -673,6 +681,15 @@ ion-modal {
 //     --backdrop-opacity: var(--ion-backdrop-opacity, 0.32);
 //   }
 
+.loading-wrapper.sc-ion-loading-md,.loading-wrapper.sc-ion-loading-ios{
+  background: none;
+    box-shadow: none;
+
+    position: fixed;
+    top: 50%;
+
+    transform: translate(-50%, -50%);
+}
 
 // ===========ion-select css ===============================
 ion-select::part(text) {

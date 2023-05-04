@@ -1,9 +1,15 @@
 <ion-header [translucent]="true" class="ion-no-border">
   <ion-toolbar class="bg_toolbar">
-    <ion-row style="padding: 25px 0px 0px">
+    <ion-row style="padding:10px 0px 0px;align-items: center;">
       <ion-col size="0.3"></ion-col>
       <ion-col size="2">
-
+        <ion-menu-toggle>
+          <ion-buttons>
+            <div style="width: 100%">
+              <img src="assets/images/icons/side_menu_icon.svg">
+            </div>
+          </ion-buttons>
+        </ion-menu-toggle>
       </ion-col>
       <ion-col size="7" style="text-align: center;padding: 0px;">
         <div class="toolbar_heading clr_heading sf_pro_display">Explore</div>
@@ -200,7 +206,7 @@
       </ion-tab-button>
 
       <ion-tab-button class="bg_F7F8F8" (click)="supportTab()">
-        <img src="../../assets/images/tab_icons/support_def.svg" alt="">
+        <img src="../../assets/images/tab_icons/eco.svg" alt="">
       </ion-tab-button>
 
       <ion-tab-button class="bg_F7F8F8" (click)="profileTab()">

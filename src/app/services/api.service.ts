@@ -4,7 +4,8 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
   providedIn: 'root'
 })
 export class ApiService {
-  baseURL = 'https://countr.eigix.net/api'
+  // baseURL = 'https://countr.eigix.net/api'
+  baseURL = 'https://portal.countr.ai/api'
   constructor(public http: HttpClient) { }
 
   sendRequest(action: any, data?: any) {
