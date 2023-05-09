@@ -2,3 +2,34 @@
     padding: 10px 22px 30px;
 }
 
+.itemcls{
+  border-radius: 14px;
+  margin-bottom: 10px;
+  --inner-padding-top: 8px;
+  --inner-padding-bottom: 8px;
+}
+.small_btn1{
+  box-shadow: none !important;
+  height: 29px !important;
+  text-transform: capitalize !important;
+  --border-radius: 20px;
+  --border-color: #1DA1F2 !important;
+  --border-style: solid !important;
+  --border-width: 1px !important;
+}
+.firstactive{
+  --color: #fff !important;
+  --background: #1DA1F2 !important;
+}
+.active{
+  --color: #fff !important;
+  --background: #1DA1F2 !important;
+}
+
+ion-radio.ios {
+  width: 20px;
+  height: 20px;
+
+  border: 2px solid #ddd;
+  border-radius: 4px;
+}

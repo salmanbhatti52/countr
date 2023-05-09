@@ -8,7 +8,9 @@ import { log } from 'console';
 import { Router } from '@angular/router';
 import { ApiService } from '../services/api.service';
 import { ExtraService } from '../services/extra.service';
-
+import { GoogleAuth } from '@codetrix-studio/capacitor-google-auth';
+import { isPlatform } from '@ionic/angular';
+import { UserService } from '../api/user.service';
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.page.html',
@@ -38,6 +40,7 @@ export class SignupPage implements OnInit {
   constructor(public router: Router,
     public menuCtrl: MenuController,
     public api: ApiService,
+    public user: UserService,
     public extra: ExtraService) {
 
   }
@@ -133,6 +136,40 @@ export class SignupPage implements OnInit {
     this.router.navigate(['/login']);
   }
 
+  async Loginwithgoogle() {
+    this.user.googleuserdetail = await GoogleAuth.signIn();
+    if (this.user.googleuserdetail) {
+      console.log('user details::', this.user.googleuserdetail);
+      let data = {
+        "email": this.user.googleuserdetail.email,
+        "one_signal_id": "123456",
+        "google_access_token": this.user.googleuserdetail.authentication.accessToken,
+        "account_type": "SignupWithSocial",
+        "social_acc_type": "Google",
+        "password": "dummy",
+        "system_countries_id": "0",
+        "system_states_id": "0",
+        "status": "Active",
+        "verify_code": "dummy"
+      }
+      this.extra.loadershow()
+      this.api.sendRequest('signup_social', data).subscribe((res: any) => {
+        console.log('signinresponse====', res);
+        if (res.status == 'success') {
+          this.extra.hideLoader()
+          localStorage.setItem('loggedId', res.data[0].users_customers_id);
+          localStorage.setItem('userdata', JSON.stringify(res.data[0]));
+          this.router.navigate(['/home']);
+        } else {
+          this.extra.hideLoader()
+          this.extra.presentToast(res.message)
+        }
+
+      }, err => {
+        this.extra.hideLoader()
+      })
+    }
+  }
   startIntro() {
     let datatosend = {
       "one_signal_id": "123456",

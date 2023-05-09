@@ -5,12 +5,13 @@ import { IonicModule } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { UserService } from '../api/user.service';
 import { NgZone } from "@angular/core";
-import { Geolocation } from "@awesome-cordova-plugins/geolocation/ngx";
+// import { Geolocation } from "@awesome-cordova-plugins/geolocation/ngx";
 import { NativeGeocoder, NativeGeocoderResult, NativeGeocoderOptions } from '@awesome-cordova-plugins/native-geocoder/ngx';
 import { LocationAccuracy } from '@awesome-cordova-plugins/location-accuracy/ngx';
 import { ExtraService } from '../services/extra.service';
 import { ApiService } from '../services/api.service';
-
+import { AndroidPermissions } from '@awesome-cordova-plugins/android-permissions/ngx';
+// import { Geolocation } from '@capacitor/geolocation';
 declare var google: any;
 @Component({
   selector: 'app-edit-profile',
@@ -50,6 +51,7 @@ export class EditProfilePage implements OnInit {
     private nativeGeocoder: NativeGeocoder,
     private ngZone: NgZone,
     public extra: ExtraService,
+    private androidPermissions: AndroidPermissions,
     private locationAccuracy: LocationAccuracy,
     public api: ApiService) { }
 
@@ -109,33 +111,100 @@ export class EditProfilePage implements OnInit {
       });
     });
   }
-
   getCurrentLocatiuon() {
-    this.locationAccuracy.canRequest().then((canRequest: boolean) => {
-
-      if (canRequest) {
-        // the accuracy option will be ignored by iOS
-        this.locationAccuracy.request(this.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY).then(
-          () => {
-            console.log('Request successful');
-            console.log("getCurrentLocatiuon()");
-            // this.extra.loadershow()
-            navigator.geolocation.getCurrentPosition((position) => {
-              console.log(position);
-
-              this.latitude = position.coords.latitude;
-              this.longitude = position.coords.longitude;
-              // this.extra.hideLoader()
-              this.getAddress(this.latitude, this.longitude);
-            });
-          },
-          error => console.log('Error requesting location permissions', error)
-        );
+    this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.ACCESS_COARSE_LOCATION).then(
+      result => {
+        if (result.hasPermission) {
+          this.requestToSwitchOnGPS();
+        } else {
+          this.askGPSPermission();
+        }
+      },
+      err => {
+        alert(err);
       }
-
-    });
-
+    );
   }
+  askGPSPermission() {
+    this.locationAccuracy.canRequest().then((canRequest: boolean) => {
+      if (canRequest) {
+      } else {
+        this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.ACCESS_COARSE_LOCATION)
+          .then(
+            () => {
+              this.requestToSwitchOnGPS();
+            },
+            error => {
+              alert(error)
+            }
+          );
+      }
+    });
+  }
+  requestToSwitchOnGPS() {
+    this.locationAccuracy.request(this.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY).then(
+      () => {
+        navigator.geolocation.getCurrentPosition((position) => {
+          console.log(position);
+
+          this.latitude = position.coords.latitude;
+          this.longitude = position.coords.longitude;
+          // this.extra.hideLoader()
+          this.getAddress(this.latitude, this.longitude);
+        });
+      },
+      error => alert(JSON.stringify(error))
+    );
+  }
+
+  // async getCurrentLocatiuon() {
+  //   console.log('open location');
+
+  //   try {
+  //     console.log('open locationdasdsad');
+  //     // const status = await this.requestLocationPermission();
+  //     // console.log(status);
+  //     const Canrequest: boolean = await this.locationAccuracy.canRequest()
+
+  //     if (Canrequest) {
+  //       // the accuracy option will be ignored by iOS
+  //       await this.locationAccuracy.request(this.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY).then(
+  //         () => {
+  //           console.log('Request successful');
+  //           console.log("getCurrentLocatiuon()");
+  //           // this.extra.loadershow()
+  //           navigator.geolocation.getCurrentPosition((position) => {
+  //             console.log(position);
+
+  //             this.latitude = position.coords.latitude;
+  //             this.longitude = position.coords.longitude;
+  //             // this.extra.hideLoader()
+  //             this.getAddress(this.latitude, this.longitude);
+  //           });
+  //         },
+  //         error => {
+  //           console.log('Error requesting location permissions', error)
+  //           this.extra.presentToast('Error requesting location permissions')
+  //         }
+
+  //       );
+  //     }
+
+
+  //   } catch (error) {
+  //     alert(error)
+  //   }
+
+  //   // navigator.geolocation.getCurrentPosition((position) => {
+  //   //   console.log(position);
+
+  //   //   this.latitude = position.coords.latitude;
+  //   //   this.longitude = position.coords.longitude;
+  //   //   // this.extra.hideLoader()
+  //   //   this.getAddress(this.latitude, this.longitude);
+  //   // });
+
+  // }
 
   getAddress(latitude: any, longitude: any) {
     console.log("lat======", latitude);
@@ -148,7 +217,15 @@ export class EditProfilePage implements OnInit {
       })
       .catch((error: any) => console.log(error));
   }
-
+  // requestLocationPermission() {
+  //   return Geolocation.requestPermissions()
+  //     .then(status => {
+  //       return status;
+  //     })
+  //     .catch(e => {
+  //       throw (e);
+  //     });
+  // }
   updateProfile() {
     let data = {
       "users_customers_id": localStorage.getItem('loggedId'),

@@ -57,7 +57,8 @@
               <div class="sf_pro_display font_14_400 center clr_text">This app wants to access your location. Data on
                 your dashboard will be based on your current location.</div>
               <div class="flex_center space_between">
-                <ion-button fill="outline" class="btn width_47_per sf_pro_display btn_outline_primary">Skip</ion-button>
+                <ion-button fill="outline" class="btn width_47_per sf_pro_display btn_outline_primary"
+                  (click)="cancel()">Skip</ion-button>
                 <ion-button class="btn sf_pro_display width_47_per btn_solid_primary"
                   (click)="getCurrentLocatiuon()">Allow</ion-button>
               </div>

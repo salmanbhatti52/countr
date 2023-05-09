@@ -9,34 +9,44 @@
         </div>
       </div>
     </div>
-    
+
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true" class="background_content" >
+<ion-content [fullscreen]="true" class="background_content">
   <!-- <ion-header collapse="condense">
     <ion-toolbar>
       <ion-title size="large">tutorial</ion-title>
     </ion-toolbar>
   </ion-header> -->
   <div class="container" [class.container2]="user.loginVal == true">
-    
+
     <div class="section1">
       <div class="center clr_heading top_heading sf_pro_display" *ngIf="user.loginVal == false">How to use App</div>
-      <div class="center clr_text input_lbl sf_pro_display mgt_15">Watch our complete step by step tutorial created for better understanding of our platform. </div>
+      <div class="center clr_text input_lbl sf_pro_display mgt_15">{{text}} </div>
       <div class="center mgt_10">
         <img src="../../assets/images/tutorial.svg" alt="">
       </div>
-      
+
     </div>
-    
+
     <div class="mgt_10">
-      <img src="../../assets/images/video.svg" alt="">
+      <!-- <iframe width="100%" [src]="videolink"></iframe> -->
+      <iframe src="https://www.youtube.com/embed/l0eM1_JVqHE"
+        title="Getting started | How and why to sign in to YouTube and create a YouTube channel" frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen style="width: 100%;"></iframe>
+
+      <!-- <video width="100%" controls="true">
+        <source [src]="videolink">
+      </video> -->
+
     </div>
-    
-    <div class="section2" *ngIf="user.loginVal == false">
+
+    <div class="section2" *ngIf="pagecomig!='customer-support'">
       <div class="pdt_15">
-        <ion-button (click)="setupProfile()" expand="block" size="large" class="btn sf_pro_display btn_solid_primary ">Next</ion-button>
+        <ion-button (click)="setupProfile()" expand="block" size="large"
+          class="btn sf_pro_display btn_solid_primary ">Next</ion-button>
       </div>
       <div class="mgt_15 input_lbl center">
         <span (click)="setupProfile()" class="clr_primary underline_text sf_pro_display">Skip</span>

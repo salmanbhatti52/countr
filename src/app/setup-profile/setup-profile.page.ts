@@ -11,7 +11,7 @@ import { Geolocation } from "@awesome-cordova-plugins/geolocation/ngx";
 import { NativeGeocoder, NativeGeocoderResult, NativeGeocoderOptions } from '@awesome-cordova-plugins/native-geocoder/ngx';
 import { LocationAccuracy } from '@awesome-cordova-plugins/location-accuracy/ngx';
 import { ExtraService } from '../services/extra.service';
-
+import { AndroidPermissions } from '@awesome-cordova-plugins/android-permissions/ngx';
 declare var google: any;
 @Component({
   selector: 'app-setup-profile',
@@ -45,6 +45,7 @@ export class SetupProfilePage implements OnInit {
   constructor(public router: Router,
     private nativeGeocoder: NativeGeocoder,
     private ngZone: NgZone,
+    private androidPermissions: AndroidPermissions,
     public extra: ExtraService,
     private locationAccuracy: LocationAccuracy,
     public api: ApiService
@@ -85,31 +86,81 @@ export class SetupProfilePage implements OnInit {
     });
   }
 
+  // getCurrentLocatiuon() {
+  //   // this.locationAccuracy.canRequest().then((canRequest: boolean) => {
+
+  //   //   if (canRequest) {
+  //   //     // the accuracy option will be ignored by iOS
+  //   //     this.locationAccuracy.request(this.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY).then(
+  //   //       () => {
+  //   //         console.log('Request successful');
+  //   //         console.log("getCurrentLocatiuon()");
+  //   //         // this.extra.loadershow()
+  //   //         navigator.geolocation.getCurrentPosition((position) => {
+  //   //           this.latitude = position.coords.latitude;
+  //   //           this.longitude = position.coords.longitude;
+  //   //           // this.extra.hideLoader()
+  //   //           this.getAddress(this.latitude, this.longitude);
+  //   //         });
+  //   //       },
+  //   //       error => console.log('Error requesting location permissions', error)
+  //   //     );
+  //   //   }
+
+  //   // });
+
+  //   navigator.geolocation.getCurrentPosition((position) => {
+  //     this.latitude = position.coords.latitude;
+  //     this.longitude = position.coords.longitude;
+  //     // this.extra.hideLoader()
+  //     this.getAddress(this.latitude, this.longitude);
+  //   });
+  // }
   getCurrentLocatiuon() {
-    this.locationAccuracy.canRequest().then((canRequest: boolean) => {
-
-      if (canRequest) {
-        // the accuracy option will be ignored by iOS
-        this.locationAccuracy.request(this.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY).then(
-          () => {
-            console.log('Request successful');
-            console.log("getCurrentLocatiuon()");
-            // this.extra.loadershow()
-            navigator.geolocation.getCurrentPosition((position) => {
-              this.latitude = position.coords.latitude;
-              this.longitude = position.coords.longitude;
-              // this.extra.hideLoader()
-              this.getAddress(this.latitude, this.longitude);
-            });
-          },
-          error => console.log('Error requesting location permissions', error)
-        );
+    this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.ACCESS_COARSE_LOCATION).then(
+      result => {
+        if (result.hasPermission) {
+          this.requestToSwitchOnGPS();
+        } else {
+          this.askGPSPermission();
+        }
+      },
+      err => {
+        alert(err);
       }
-
-    });
-
+    );
   }
+  askGPSPermission() {
+    this.locationAccuracy.canRequest().then((canRequest: boolean) => {
+      if (canRequest) {
+      } else {
+        this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.ACCESS_COARSE_LOCATION)
+          .then(
+            () => {
+              this.requestToSwitchOnGPS();
+            },
+            error => {
+              alert(error)
+            }
+          );
+      }
+    });
+  }
+  requestToSwitchOnGPS() {
+    this.locationAccuracy.request(this.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY).then(
+      () => {
+        navigator.geolocation.getCurrentPosition((position) => {
+          console.log(position);
 
+          this.latitude = position.coords.latitude;
+          this.longitude = position.coords.longitude;
+          // this.extra.hideLoader()
+          this.getAddress(this.latitude, this.longitude);
+        });
+      },
+      error => alert(JSON.stringify(error))
+    );
+  }
   getAddress(latitude: any, longitude: any) {
     console.log("lat======", latitude);
     console.log("long======", longitude);

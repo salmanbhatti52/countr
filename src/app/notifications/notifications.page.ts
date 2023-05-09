@@ -42,23 +42,14 @@ export class NotificationsPage implements OnInit {
     })
   }
   getnotification() {
+    this.extra.loadershow()
     this.api.sendRequest('notifications', { "users_customers_id": localStorage.getItem('loggedId') }).subscribe((res: any) => {
       console.log('response', res);
       if (res.status == 'success') {
+        this.extra.hideLoader()
         this.notilength = res.data.length
         this.noti = res.data
-        // let dd = moment(res.data.date_added).format('YYYY-MM-DD')
-        // const d = new Date(dd);
 
-        // console.log(moment(d).fromNow());
-
-        // res.data.forEach((ele: any) => {
-        //   let data = {
-        //     message: ele.message,
-        //     time: moment(ele.date_added).fromNow()
-        //   }
-        //   this.noti.push(data)
-        // });
       } else {
         this.extra.presentToast(res.message)
       }

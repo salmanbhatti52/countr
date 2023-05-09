@@ -10,6 +10,7 @@ import { HttpClientModule } from "@angular/common/http";
 import { NativeGeocoder } from '@awesome-cordova-plugins/native-geocoder/ngx';
 import { Geolocation } from "@awesome-cordova-plugins/geolocation/ngx";
 import { LocationAccuracy } from '@awesome-cordova-plugins/location-accuracy/ngx';
+import { AndroidPermissions } from '@awesome-cordova-plugins/android-permissions/ngx';
 if (environment.production) {
   enableProdMode();
 }
@@ -20,6 +21,7 @@ bootstrapApplication(AppComponent, {
     NativeGeocoder,
     Geolocation,
     LocationAccuracy,
+    AndroidPermissions,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     importProvidersFrom(IonicModule.forRoot({}), HttpClientModule),
     provideRouter(routes),

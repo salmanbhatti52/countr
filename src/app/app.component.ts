@@ -2,6 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
+import { UserService } from './api/user.service';
+import { GoogleAuth } from '@codetrix-studio/capacitor-google-auth';
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -17,7 +19,8 @@ export class AppComponent {
     // { title: 'Archived', url: '/folder/archived', icon: 'archive' },
     // { title: 'Trash', url: '/folder/trash', icon: 'trash' },
     // { title: 'Spam', url: '/folder/spam', icon: 'warning' },
-    { title: 'Profile', url: 'profile', icon: 'paper-plane' },
+    { title: 'Home', url: 'home', icon: 'home' },
+    { title: 'Profile', url: 'profile', icon: 'person' },
     { title: 'Customer Support', url: 'customer-support', icon: 'mail' },
     { title: 'Change Password', url: 'changepassword', icon: 'archive' },
     { title: 'Logout', icon: 'trash' },
@@ -26,7 +29,8 @@ export class AppComponent {
     // { title: 'Spam', url: '/folder/spam', icon: 'warning' },
   ];
   public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
-  constructor(public router: Router) {
+  constructor(public router: Router,
+    public user: UserService) {
 
   }
 
@@ -40,10 +44,12 @@ export class AppComponent {
     }
   }
 
-  pages(p: any) {
+  async pages(p: any) {
     if (p.title == 'Logout') {
       this.router.navigate(['login']);
-      localStorage.removeItem('loggedId')
+      localStorage.removeItem('loggedId');
+      await GoogleAuth.signOut();
+      this.user.googleuserdetail = null
     }
   }
 }

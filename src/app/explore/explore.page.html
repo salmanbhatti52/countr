@@ -40,94 +40,129 @@
   <div class="container">
     <div class="searchbar_padding">
       <ion-searchbar [debounce]="1000" (ionChange)="handleChange($event)" type="text" show-clear-button="always"
-        class="sf_pro_display search_bar" placeholder="" (ionClear)="clearResult()">
+        class="sf_pro_display search_bar" placeholder="" [(ngModel)]="term" (ionClear)="clearResult()">
       </ion-searchbar>
     </div>
 
-    <div class="mgt_18 pd_5">
-      <swiper [config]="{slidesPerView:2.4, spaceBetween:20, initialSlide:0, speed:400}" [pagination]="false">
+    <!-- <div class="mgt_18 pd_5">
+      <swiper [config]="{slidesPerView:2.4, spaceBetween:0, initialSlide:0, speed:400}" [pagination]="false">
         <ng-template swiperSlide>
-          <div (click)="selectSlide(1)">
-            <ion-button class="small_btn slide_btn width_115 font_14_400 sf_pro_display" fill="outline"
-              [class.active_slide]="slide1 == true">All</ion-button>
+          <div (click)="AllSurvey()">
+            <ion-button class="small_btn slide_btn  font_14_400 sf_pro_display swiper-button"
+              fill="outline">All</ion-button>
           </div>
         </ng-template>
-        <ng-template swiperSlide>
-          <div (click)="selectSlide(2)">
-            <ion-button class="small_btn slide_btn width_115 font_14_400 sf_pro_display"
-              [class.active_slide]="slide2 == true" fill="outline">Food</ion-button>
+        <ng-template swiperSlide *ngFor="let item of categories;let i=index;">
+          <div (click)="surveyById(item,i)">
+            <ion-button class="small_btn slide_btn  font_14_400 sf_pro_display swiper-button" fill="outline"
+              [class.active]="i === activeIndex">{{item.name}}</ion-button>
           </div>
         </ng-template>
-        <ng-template swiperSlide>
-          <div (click)="selectSlide(3)">
-            <ion-button class="small_btn slide_btn width_115 font_14_400 sf_pro_display" fill="outline"
-              [class.active_slide]="slide3 == true">Tech</ion-button>
-          </div>
-        </ng-template>
-        <ng-template swiperSlide>
-          <div (click)="selectSlide(4)">
-            <ion-button class="small_btn slide_btn width_115 font_14_400 sf_pro_display" fill="outline"
-              [class.active_slide]="slide4 == true">Entertainment</ion-button>
-          </div>
-        </ng-template>
-        <ng-template swiperSlide>
-          <div (click)="selectSlide(5)">
-            <ion-button class="small_btn slide_btn width_115 font_14_400 sf_pro_display" fill="outline"
-              [class.active_slide]="slide5 == true">Education</ion-button>
-          </div>
-        </ng-template>
+
 
       </swiper>
-    </div>
 
-    <div *ngIf="slide1 == true">
+    </div> -->
+    <div style="display: flex;
+    overflow-x: scroll;margin-top: 10%;">
+      <div (click)="AllSurvey()">
+        <ion-button class="small_btn1 slide_btn  font_14_400 sf_pro_display swiper-button" fill="outline"
+          style="padding-right: 10px;" [class.firstactive]="firstactive==true">All</ion-button>
+      </div>
+      <div *ngFor="let item of categories;let i=index;">
+        <div (click)="surveyById(item,i)">
+          <ion-button class="small_btn1 slide_btn  font_14_400 sf_pro_display swiper-button" fill="outline"
+            [class.active]="i === activeIndex" style="padding: 0px 5px;">{{item.name}}</ion-button>
+        </div>
+      </div>
+
+    </div>
+    <div>
       <div class="mgt_18 pd_lr_8">
         <div class="font_18_700 sf_pro_display clr_heading">Surveys</div>
       </div>
 
-      <div class=" mgt_20 ">
-        <div class="flex_center space_between card_header pd_12">
-          <div>
-            <div class="font_14_500 clr_heading sf_pro_display">What type of food do you like most?</div>
-            <div class="font_12_500 clr_text sf_pro_display flex_center mgt_8">( 1 Question ) <img class="mgl_8 mgr_6"
-                src="../../assets/images/icons/time_icon.svg" alt=""> 10 min</div>
-          </div>
-          <div class="right">
-            <ion-button class="small_btn card_btn font_14_400 sf_pro_display" fill="outline">Food</ion-button>
+      <div>
+        <div *ngFor="let ls of surveylists | filter:term;let i=index;" class=" mgt_20 card_header">
 
-            <div class="flex_center font_12_500 sf_pro_display clr_text mgt_7">
-              <img class="mgr_6" src="../../assets/images/icons/reward_icon.svg" alt="">
-              10 points
+          <div class="flex_center space_between pd_12" (click)="selectsurvey(ls,i)">
+            <div>
+              <div class="font_14_500 clr_heading sf_pro_display">{{ls.name}}</div>
+              <div class="font_12_500 clr_text sf_pro_display flex_center mgt_8">( {{ls.total_questions}} Question )
+                <!-- <img
+                  class="mgl_8 mgr_6" src="../../assets/images/icons/time_icon.svg" alt=""> {{ls.time_elapsed_string}} -->
+              </div>
+            </div>
+            <div class="right">
+              <ion-button class="small_btn card_btn font_14_400 sf_pro_display"
+                fill="outline">{{ls.survey_categories.name}}</ion-button>
+
+              <div class="font_12_500 sf_pro_display clr_text mgt_7" style="display: flex;
+              align-items: center;
+              justify-content: flex-end;">
+                <img class="mgr_6" src="../../assets/images/icons/reward_icon.svg" alt="">
+                {{ls.survey_rewards.reward}}
+              </div>
             </div>
           </div>
+
+          <div *ngIf="i==selectedSurveyIndex">
+            <div *ngFor="let q of questionlist; let j = index;">
+              <div *ngIf="j==questionIndex">
+                <div style="color: #404142;
+                font-size: 14px;
+                font-weight: 500;
+                padding: 0px 0px 10px 10px!important;">{{q.name}}</div>
+
+                <div class=" card1_con_bg">
+                  <div *ngIf="q.question_type=='Single Choice'" class="pd_10">
+                    <ion-radio-group (ionChange)="mcqAnswer($event)" [(ngModel)]="singleValue">
+                      <ion-list>
+                        <ion-item *ngFor="let ans of q.answers;let i= index;" lines="none" class="itemcls">
+                          <ion-label class="sf_pro_display font_14_400 clr_heading">{{ans.name}}</ion-label>
+                          <ion-radio aria-label="Option Label" slot="end" [value]="ans" mode="md"></ion-radio>
+                        </ion-item>
+                      </ion-list>
+
+                    </ion-radio-group>
+                  </div>
+                  <div *ngIf="q.question_type=='Multiple Choice'" class="pd_10">
+
+                    <ion-list>
+                      <ion-item *ngFor="let ans of q.answers;let i= index;" lines="none" class="itemcls">
+                        <ion-label class="sf_pro_display font_14_400 clr_heading">{{ans.name}}</ion-label>
+                        <ion-checkbox aria-label="ion-cb-2-lbl" (ionChange)="checkboxClick($event)" slot="end"
+                          [value]="ans" mode="md"></ion-checkbox>
+                      </ion-item>
+                    </ion-list>
+                  </div>
+                </div>
+                <div *ngIf="q.question_type=='Multiple Choice' || q.question_type=='Single Choice'">
+                  <ion-button (click)="UpdateQuestionIndex()">{{btnValue}}</ion-button>
+                </div>
+
+                <div *ngIf="q.question_type=='Text'">
+                  <div class="card2_con_bg" style="padding: 10px;">
+                    <div style="display: flex;
+                    align-items: center;">
+                      <textarea placeholder="Type your answer here"
+                        class="font_14_500 sf_pro_display bg_white width_100_per text_area card2_textarea_height"
+                        name="" id="" cols="10" rows="2" [(ngModel)]="ansintext"></textarea>
+                      <img src="assets/images/sendicon.svg" style="margin-left: 3%;" (click)=" singletextAns(q)">
+                    </div>
+
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
         </div>
 
-        <div class="pd_10 card1_con_bg">
-          <div class="flex_center space_between card_con1_choice" (click)='updateChoice(1)'>
-            <div class="sf_pro_display font_14_400 clr_heading">Chinese</div>
-            <div>
-              <img *ngIf="choice1==true" src="../../assets/images/icons/radio_colored.svg" alt="">
-              <img *ngIf="choice1==false" src="../../assets/images/icons/radio_empty.svg" alt="">
-            </div>
-          </div>
-          <div class="flex_center space_between card_con1_choice mgt_10" (click)='updateChoice(2)'>
-            <div class="sf_pro_display font_14_400 clr_heading">Italian</div>
-            <div>
-              <img *ngIf="choice2==true" src="../../assets/images/icons/radio_colored.svg" alt="">
-              <img *ngIf="choice2==false" src="../../assets/images/icons/radio_empty.svg" alt="">
-            </div>
-          </div>
-          <div class="flex_center space_between card_con1_choice mgt_10" (click)='updateChoice(3)'>
-            <div class="sf_pro_display font_14_400 clr_heading">Fast Food</div>
-            <div>
-              <img *ngIf="choice3==true" src="../../assets/images/icons/radio_colored.svg" alt="">
-              <img *ngIf="choice3==false" src="../../assets/images/icons/radio_empty.svg" alt="">
-            </div>
-          </div>
-        </div>
       </div>
 
-      <div class=" mgt_20 ">
+      <!-- <div class=" mgt_20 ">
         <div class="flex_center space_between card_header pd_12">
           <div>
             <div class="font_14_500 clr_heading sf_pro_display">What are the qualities of a good PC?</div>
@@ -185,7 +220,7 @@
 
         </div>
 
-      </div>
+      </div> -->
     </div>
 
   </div>

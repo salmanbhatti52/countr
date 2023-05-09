@@ -11,14 +11,14 @@ import { IonModal } from '@ionic/angular';
 import { OverlayEventDetail } from '@ionic/core/components';
 import { ApiService } from '../services/api.service';
 import { ExtraService } from '../services/extra.service';
-
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 SwiperCore.use([Autoplay, Keyboard, Pagination, Scrollbar, Zoom, IonicSlides]);
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule, SwiperModule]
+  imports: [IonicModule, CommonModule, FormsModule, SwiperModule, Ng2SearchPipeModule]
 })
 export class HomePage implements OnInit {
   @ViewChild(IonModal) modal!: IonModal;
@@ -26,17 +26,30 @@ export class HomePage implements OnInit {
   choice2 = true;
   choice3 = false;
   categories: any;
-
+  selectedSurveyId: any;
   ans = [{ ans1: 'chinese' }, { ans1: 'Itlian' }, { ans1: 'tokoyo' }]
   surveylists: any;
   answers: any;
   questionlist: any;
   selectedOption: any;
   isdown = false;
-  selectedValue: any = '';
+  singleValue: any = '';
   currentIndex = 0;
   questionname: any;
   questionslength = 0;
+  questionsLength = 0;
+  questionIndex = 0;
+  selectedSurveyIndex: any;
+  btnValue = 'Next'
+  userSelectedSurvey: any;
+  ansval: any;
+  survey_list_qs_answers_id: any;
+  multiansarr: any = [];
+  multival: any = '';
+  term: any;
+  ansintext: any = '';
+  categoryname: any;
+  categoryitem = false;
   constructor(public router: Router,
     public user: UserService,
     public api: ApiService,
@@ -51,6 +64,9 @@ export class HomePage implements OnInit {
     this.getCategories()
     this.getsurveylists()
   }
+  ionViewWillLeave() {
+    this.categoryitem = false;
+  }
 
   getCategories() {
     this.api.getRequest('survey_categories').subscribe((res: any) => {
@@ -59,60 +75,165 @@ export class HomePage implements OnInit {
     })
   }
   getsurveylists() {
-    this.api.getRequest('survey_list_top').subscribe((res: any) => {
+    let data = {
+      "users_customers_id": localStorage.getItem('loggedId')
+    }
+    this.api.sendRequest('survey_list_top', data).subscribe((res: any) => {
+      console.log('survey_list_top=====', res);
+      this.surveylists = res.data
+    })
+  }
+  allSurevy() {
+    let data = {
+      "users_customers_id": localStorage.getItem('loggedId')
+    }
+    this.api.sendRequest('survey_list_top', data).subscribe((res: any) => {
+      console.log('survey_list_top=====', res);
+      this.surveylists = res.data
+    })
+  }
+  surveyById(item: any) {
+    this.categoryitem = true
+    console.log('obj taken====', item);
+    this.categoryname = item.name
+    let data = {
+      "users_customers_id": localStorage.getItem('loggedId'),
+      "survey_categories_id": item.survey_categories_id
+    }
+    this.api.sendRequest('survey_list_by_category_id', data).subscribe((res: any) => {
       console.log('survey_list_top=====', res);
       this.surveylists = res.data
     })
   }
   selectsurvey(val: any, index: any) {
-    console.log('current adadsad,', this.currentIndex);
-    if (this.currentIndex >= this.questionslength) {
-      alert('hellow222' + ' ' + this.questionslength)
-      this.currentIndex = 0;
+    if (val.survey_attempt_status == "Completed") {
+      this.extra.presentToast('You have already submitted your answer');
+    } else {
+      this.questionlist = [];
+      this.singleValue = '';
+      this.multival = ''
+      this.questionIndex = 0;
+
+
+      this.selectedSurveyIndex = index;
+
+      console.log("user_selectedSurveyIndex: ", this.selectedSurveyIndex);
+      console.log("user_selected_survey: ", val);
+      this.userSelectedSurvey = val;
+      this.selectedSurveyId = val.survey_list_id;
+      this.api.sendRequest('survey_list_questions', { "survey_list_id": val.survey_list_id }).subscribe((res: any) => {
+        console.log('survey_list_questions=====', res);
+
+        this.questionlist = res.data
+        this.questionslength = this.questionlist.length
+        this.answers = this.questionlist[this.currentIndex].answers
+        if (this.questionlist.length == 1) {
+          this.btnValue = 'Done'
+        } else {
+          this.btnValue = 'Next'
+        }
+
+
+
+
+      })
+
     }
 
-    console.log(val);
 
-    this.api.sendRequest('survey_list_questions', { "survey_list_id": val.survey_list_id }).subscribe((res: any) => {
-      console.log('survey_list_questions=====', res);
+  }
 
-      this.questionlist = res.data
-      this.questionslength = this.questionlist.length
-      this.answers = this.questionlist[this.currentIndex].answers
+  saveChoice(ans: any) {
 
-      // console.log(this.answers);
-      // this.questionname = this.answers.name
-      // this.questionlist[index].isdown = !(this.questionlist[index].isdown);
-      // res.data.forEach((ele: any) => {
-      //   // console.log(ele.answers);
-      //   // let vales = ele.answers
-      //   // vales.forEach((resval: any) => {
-      //   //   resval.value = false;
+  }
 
-      //   // });
+  UpdateQuestionIndex() {
+    console.log(this.multiansarr);
+    if (this.multiansarr.length != 0) {
+      this.questionIndex++;
+      if (this.questionlist.length - 1 == this.questionIndex) {
+        this.btnValue = 'Done'
+      }
+      let data = JSON.stringify({
+        survey_list_id: this.userSelectedSurvey.survey_list_id,
+        users_customers_id: localStorage.getItem('loggedId'),
+        survey_list_qs_answers: this.multiansarr
+
+      })
+      this.api.sendRequest('survey_list_reponses', data).subscribe((res: any) => {
+        console.log('survey_list_reponses', res);
+        this.multiansarr = []
+        this.getsurveylists()
+      })
+
+    } else {
+      this.extra.presentToast('Please select an option')
+    }
 
 
-      // });
 
 
+
+  }
+  singletextAns(val: any) {
+    console.log('single ans val', val);
+
+    let data = {
+      survey_list_qs_id: val.survey_list_qs_id,
+      survey_list_qs_answers_id: 0,
+      answer: this.ansintext
+    }
+    this.multiansarr.push(data)
+    this.questionIndex++;
+    let senddata = JSON.stringify({
+      survey_list_id: this.userSelectedSurvey.survey_list_id,
+      users_customers_id: localStorage.getItem('loggedId'),
+      survey_list_qs_answers: this.multiansarr
+
+    })
+    this.api.sendRequest('survey_list_reponses', senddata).subscribe((res: any) => {
+      console.log('survey_list_reponses', res);
+      this.multiansarr = []
     })
   }
   mcqAnswer(ev: any) {
+    // this.multiansarr = [];
     console.log(ev);
-    this.selectedValue = ev.detail.value
-    // if (this.currentIndex < this.answers.length - 1) {
-    //   this.currentIndex++;
-    // }
-    console.log('question length', this.questionslength);
-
-    if (this.currentIndex >= this.questionslength) {
-      alert('hellow' + ' ' + this.questionslength)
-      this.currentIndex = 0;
+    this.singleValue = ev.detail.value
+    // this.ansval = this.selectedValue.name
+    // this.survey_list_qs_answers_id = this.selectedValue.survey_list_qs_answers_id
+    let data = {
+      survey_list_qs_id: this.singleValue.survey_list_qs_id,
+      survey_list_qs_answers_id: this.singleValue.survey_list_qs_answers_id,
+      answer: this.singleValue.name
+    }
+    this.multiansarr.push(data)
+  }
+  checkboxClick(event: any) {
+    // this.multiansarr = [];
+    console.log('event', event);
+    this.multival = event.detail.value
+    let data = {
+      survey_list_qs_id: this.multival.survey_list_qs_id,
+      survey_list_qs_answers_id: this.multival.survey_list_qs_answers_id,
+      answer: this.multival.name
+    }
+    var rowId = data;
+    var checked = event.detail.checked;
+    if (checked == true) {
+      this.multiansarr.push(rowId)
+      console.log('multiansarr', this.multiansarr);
     } else {
-      this.currentIndex++;
+      var index = this.multiansarr.indexOf(rowId);
+      this.multiansarr.splice(index, 1);
+      console.log('multiansarr', this.multiansarr);
     }
 
+
+
   }
+
+
   getanswersvalues(val: any, index: any) {
     console.log('item obj====', val);
 

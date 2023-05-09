@@ -48,7 +48,7 @@
 
       <div class="input_with_icon pdr_18">
         <input type="search" inputmode="search" class="sf_pro_display c-input" placeholder="Location"
-          [(ngModel)]="location" #search>
+          [(ngModel)]="location" #search aria-label="search">
         <img src="../../assets/images/icons/location_icon.svg" alt="" (click)="getCurrentLocatiuon()">
       </div>
       <ion-list [hidden]="listishiddenFrom" style="padding: 0px !important;">

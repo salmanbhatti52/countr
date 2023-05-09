@@ -16,14 +16,41 @@ import { ApiService } from '../services/api.service';
 export class CustomerSupportPage implements OnInit {
   adminId: any;
   adminname: any;
+  email: any;
+  phone: any;
   constructor(public router: Router,
     public user: UserService,
     public api: ApiService) { }
 
   ngOnInit() {
+    this.systemsettings()
     this.getadminlist()
   }
 
+  systemsettings() {
+    this.api.getRequest('system_settings').subscribe((res: any) => {
+      console.log(res);
+
+      res.data.map((value: any, index: any) => {
+        if (
+          value.type == "email"
+
+        ) {
+
+          this.email = value.description
+
+        }
+        if (
+          value.type == "phone"
+        ) {
+          this.phone = value.description
+          console.log(this.phone);
+        }
+
+      });
+
+    })
+  }
   getadminlist() {
     this.api.getRequest('get_admin_list').subscribe((res: any) => {
       console.log(res);
@@ -56,7 +83,9 @@ export class CustomerSupportPage implements OnInit {
     this.router.navigate(['/notifications']);
   }
   goForTutorial() {
-    this.router.navigate(['/tutorial']);
+    this.router.navigate(['/tutorial', {
+      pagecoming: 'customer-support'
+    }]);
   }
 
   homeTab() {

@@ -44,7 +44,7 @@
   <div class="container pos_relative">
     <div class="searchbar_padding">
       <ion-searchbar [debounce]="1000" (ionChange)="handleChange($event)" type="text" show-clear-button="always"
-        class="sf_pro_display search_bar" placeholder="" (ionClear)="clearResult()">
+        class="sf_pro_display search_bar" placeholder="" [(ngModel)]="term" (ionClear)="clearResult()">
       </ion-searchbar>
     </div>
 
@@ -53,10 +53,21 @@
     <div class="mgt_18">
       <swiper [config]="{slidesPerView:3.4, spaceBetween:18, initialSlide:0, speed:400}" [pagination]="false"
         style="padding: 8px;">
-        <ng-template swiperSlide class="categories" *ngFor="let item of categories">
-          <div class="center">
+        <ng-template swiperSlide class="categories">
+          <div class="center" (click)="allSurevy()">
             <div>
-              <img src="https://countr.eigix.net/public/{{item.image}}" style="width: 60px;
+              <img src="../../assets/images/all.png" style="width: 60px;
+              border-radius: 90px;
+              height: 60px;">
+            </div>
+            <div class="font_14_400 sf_pro_display clr_heading">All</div>
+          </div>
+        </ng-template>
+
+        <ng-template swiperSlide class="categories" *ngFor="let item of categories">
+          <div class="center" (click)="surveyById(item)">
+            <div>
+              <img src="https://portal.countr.ai/public/{{item.image}}" style="width: 60px;
               border-radius: 90px;
               height: 60px;">
             </div>
@@ -92,17 +103,21 @@
     </div>
 
     <div class="flex_center space_between mgt_18 pd_lr_8">
-      <div class="font_18_700 sf_pro_display clr_heading">Top Surveys</div>
+      <div class="font_18_700 sf_pro_display clr_heading">Top Surveys <span style="font-size: 14px;"
+          *ngIf="categoryitem==true">({{categoryname}})</span></div>
       <div class="font_14_400 sf_pro_display clr_primary">View All</div>
     </div>
 
     <div>
-      <div *ngFor="let ls of surveylists;let i=index;" (click)="selectsurvey(ls,i)" class=" mgt_20 card_header">
-        <div class="flex_center space_between pd_12" style="margin-bottom: 10px;">
+      <div *ngFor="let ls of surveylists | filter:term;let i=index;" class=" mgt_20 card_header">
+
+        <div class="flex_center space_between pd_12" (click)="selectsurvey(ls,i)">
           <div>
             <div class="font_14_500 clr_heading sf_pro_display">{{ls.name}}</div>
-            <div class="font_12_500 clr_text sf_pro_display flex_center mgt_8">( {{ls.total_questions}} Question ) <img
-                class="mgl_8 mgr_6" src="../../assets/images/icons/time_icon.svg" alt=""> 10 min</div>
+            <div class="font_12_500 clr_text sf_pro_display flex_center mgt_8">( {{ls.total_questions}} Question )
+              <!-- <img
+                class="mgl_8 mgr_6" src="../../assets/images/icons/time_icon.svg" alt=""> {{ls.time_elapsed_string}} -->
+            </div>
           </div>
           <div class="right">
             <ion-button class="small_btn card_btn font_14_400 sf_pro_display"
@@ -117,53 +132,69 @@
           </div>
         </div>
 
-        <div *ngFor="let ans of questionlist">
-          <div *ngIf="ls.survey_list_id==ans.survey_list_id">
-            <div *ngIf="currentIndex < questionlist.length">
-              <div *ngIf="questionlist[currentIndex]">
-                <div>{{questionlist[currentIndex].name}}</div>
-                <div class="pd_10 card1_con_bg">
-                  <ion-radio-group (ionChange)="mcqAnswer($event)" [(ngModel)]="selectedValue">
+        <div *ngIf="i==selectedSurveyIndex">
+          <div *ngFor="let q of questionlist; let j = index;">
+            <div *ngIf="j==questionIndex">
+              <div style="color: #404142;
+              font-size: 14px;
+              font-weight: 500;
+              padding: 0px 0px 10px 10px!important;">{{q.name}}</div>
+
+              <div class=" card1_con_bg">
+                <div *ngIf="q.question_type=='Single Choice'" class="pd_10">
+                  <ion-radio-group (ionChange)="mcqAnswer($event)" [(ngModel)]="singleValue">
                     <ion-list>
-                      <ion-item *ngFor="let item of questionlist[currentIndex].answers;let i= index;" lines="none"
-                        class="itemcls" (click)="getanswersvalues(item,i)">
-                        <ion-label class="sf_pro_display font_14_400 clr_heading">{{item.name}}</ion-label>
-                        <ion-radio aria-label="Option Label" slot="end" [value]="item.name" mode="md"></ion-radio>
-
-
-
-
+                      <ion-item *ngFor="let ans of q.answers;let i= index;" lines="none" class="itemcls">
+                        <ion-label class="sf_pro_display font_14_400 clr_heading">{{ans.name}}</ion-label>
+                        <ion-radio aria-label="Option Label" slot="end" [value]="ans" mode="md"></ion-radio>
                       </ion-item>
                     </ion-list>
 
                   </ion-radio-group>
+                </div>
+                <div *ngIf="q.question_type=='Multiple Choice'" class="pd_10">
 
-
+                  <ion-list>
+                    <ion-item *ngFor="let ans of q.answers;let i= index;" lines="none" class="itemcls">
+                      <ion-label class="sf_pro_display font_14_400 clr_heading">{{ans.name}}</ion-label>
+                      <ion-checkbox aria-label="ion-cb-2-lbl" (ionChange)="checkboxClick($event)" slot="end"
+                        [value]="ans" mode="md"></ion-checkbox>
+                    </ion-item>
+                  </ion-list>
                 </div>
               </div>
 
+              <div *ngIf="q.question_type=='Multiple Choice' || q.question_type=='Single Choice'">
+                <ion-button (click)="UpdateQuestionIndex()">{{btnValue}}</ion-button>
+              </div>
+
+              <div *ngIf="q.question_type=='Text'">
+                <div class="card2_con_bg" style="padding: 10px;">
+                  <div style="display: flex;
+                  align-items: center;">
+                    <textarea placeholder="Type your answer here"
+                      class="font_14_500 sf_pro_display bg_white width_100_per text_area card2_textarea_height" name=""
+                      id="" cols="10" rows="2" [(ngModel)]="ansintext"></textarea>
+                    <img src="assets/images/sendicon.svg" style="margin-left: 3%;" (click)=" singletextAns(q)">
+                  </div>
+
+                </div>
+
+              </div>
             </div>
-
-
           </div>
-
-
         </div>
+
       </div>
-
-
-
-
-
 
     </div>
 
-    <div class=" mgt_20 ">
+    <!-- <div class=" mgt_20 ">
       <div class="flex_center space_between card_header pd_12">
         <div>
           <div class="font_14_500 clr_heading sf_pro_display">What are the qualities of a good PC?</div>
           <div class="font_12_500 clr_text sf_pro_display flex_center mgt_8">( 1 Question )
-            <!-- <img class="mgl_8 mgr_6" src="../../assets/images/icons/time_icon.svg" alt=""> 10 min -->
+
           </div>
         </div>
         <div class="right">
@@ -177,18 +208,17 @@
       </div>
 
       <div class="pd_10 card2_con_bg ">
-        <!-- <div class="textarea_div"> -->
+
         <textarea placeholder="Type your answer here"
           class="font_14_500 sf_pro_display bg_white width_100_per text_area card2_textarea_height" name="" id=""
           cols="30" rows="5"></textarea>
-        <!-- <ion-textarea class="font_14_500 sf_pro_display" auto-grow="true"  rows="2" cols="20" type="text" placeholder="Type your answer here" (ionInput)="sendText()"></ion-textarea> -->
-        <!-- </div> -->
+
 
       </div>
 
-    </div>
+    </div> -->
 
-    <img id="open-modal" class="pos_absolute" src="../../assets/images/help.svg" alt="">
+    <!-- <img id="open-modal" class="pos_absolute" src="../../assets/images/help.svg" alt=""> -->
     <ion-modal class="help_modal" trigger="open-modal" (willDismiss)="onWillDismiss($event)">
       <ng-template>
         <ion-content class="background_content">

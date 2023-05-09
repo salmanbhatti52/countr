@@ -14,5 +14,9 @@
     <param name="ios-package" value="RequestLocationAccuracy"/>
   </feature>
 
+  <feature name="Settings">
+    <param name="ios-package" value="CDVSettings"/>
+  </feature>
+
   
 </widget>
