@@ -4,7 +4,8 @@
   </ion-toolbar>
 </ion-header> -->
 
-<ion-content [fullscreen]="true">
+<ion-content [fullscreen]="true" style=" --background: url({{welcome_bg}})no-repeat center center / cover;
+background-size: cover;">
   <!-- <ion-header collapse="condense">
     <ion-toolbar>
       <ion-title size="large">welcome</ion-title>
@@ -13,24 +14,22 @@
   <div class="container">
     <div class="top_div">
       <div class="center">
-        <div class="heading poppins">100+</div>
+        <div class="heading poppins">{{welcome_questions}}</div>
         <div class="sub_heading poppins">Questions</div>
       </div>
       <div class="center">
-        <div class="heading poppins">200+</div>
+        <div class="heading poppins">{{welcome_users}}</div>
         <div class="sub_heading poppins">Users</div>
       </div>
     </div>
 
     <div class="center mgt_110">
-      <img src="../../assets/images/applogo.svg" alt="">
+      <img src="https://www.portal.countr.ai/public/uploads/system_image/{{system_image}}" alt="">
     </div>
 
     <div>
-      <div class="welcome_label center sf_pro_display">Welcome to CountR</div>
-      <div class="desc_box center sf_pro_display">Lorem ipsum dolor sit amet consectetur. Sit lorem enim faucibus cras
-        erat.
-        Vitae curabitur tortor arcu ultrices.</div>
+      <div class="welcome_label center sf_pro_display">{{welcome_heading}}</div>
+      <div class="desc_box center sf_pro_display">{{welcome_note}}</div>
       <div class="center">
         <ion-button expand="block" fill="outline" size="large" class="btn sf_pro_display btn_outline_white"
           (click)="goForLogin()">Get Started</ion-button>

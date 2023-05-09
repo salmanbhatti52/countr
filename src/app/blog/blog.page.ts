@@ -4,6 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { UserService } from '../api/user.service';
 import { Router } from '@angular/router';
+import { ApiService } from '../services/api.service';
+import { ExtraService } from '../services/extra.service';
 
 @Component({
   selector: 'app-blog',
@@ -14,10 +16,37 @@ import { Router } from '@angular/router';
 })
 export class BlogPage implements OnInit {
   show = false;
+  blogs: any;
+  countertext: any;
+
   constructor(public user: UserService,
-    public router: Router) { }
+    public router: Router,
+    public api: ApiService,
+    public extra: ExtraService) { }
 
   ngOnInit() {
+    this.systemsettings()
+    this.api.getRequest('blogs_list').subscribe((res: any) => {
+      console.log('blog list', res);
+      this.blogs = res.data
+    })
+  }
+
+  systemsettings() {
+    this.api.getRequest('system_settings').subscribe((res: any) => {
+      console.log(res);
+
+      res.data.map((value: any, index: any) => {
+        if (
+          value.type == "eco_countr"
+        ) {
+          this.countertext = value.description
+
+        }
+
+      });
+
+    })
   }
 
   readmore() {

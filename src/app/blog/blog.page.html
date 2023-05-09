@@ -29,54 +29,20 @@
 
     <div style="text-align: center;">
       <div class="text1 sf_pro_display">CountR CO2 emissions savings</div>
-      <img src="assets/images/numbers.svg" class="cimg">
-    </div>
-    <div class="box">
-      <img src="assets/images/1.png">
-      <div style="padding:15px;">
-        <div class="title sf_pro_display">Blog Title</div>
-        <div class="text2 sf_pro_display">
-          Donec a eros justo. Fusce egestas tristique ultrices. Nam tempor, augue nec tincidunt molestie, massa nunc
-          varius arcu, at scelerisque elit erat a magna. Donec quis erat at libero ultricellis... <span class="sp1"
-            *ngIf="!show" (click)="readmore()">Read
-            more</span>
-          <span class="sp2" *ngIf="show">
-            Fusce volutpat lectus et nisl consectetur finibus. In vitae scelerisque augue, in varius eros. Nunc sapien
-            diam, euismod et pretium id, volutpat et tortor. In vulputate lorem quis dui vestibulum, vitae imperdiet
-            diam bibendum. Maecenas scelerisque orci a dolor vestibulum sagittis. Etiam quis finibus arcu, vel efficitur
-            diam. Curabitur felis eros, vestibulum sed nisi eu, sodales aliquet lacus. Mauris lacinia quam quis feugiat
-            laoreet. Etiam lobortis aliquet euismod. Nunc dictum, sapien at egestas rutrum, dui dui fringilla erat, a
-            commodo augue augue vel magna. Sed tincidunt ante turpis, rhoncus commodo risus fringilla vel. Maecenas
-            lacinia nisl a sem ornare pharetra. Donec imperdiet justo et elementum iaculis
-
-            Fusce volutpat lectus et nisl consectetur finibus. In vitae scelerisque augue, in varius eros. Nunc sapien
-            diam, euismod et pretium id, volutpat et tortor. In vulputate lorem quis dui vestibulum, vitae imperdiet
-            diam bibendum. Maecenas scelerisque orci a dolor vestibulum sagittis. Etiam quis finibus arcu, vel efficitur
-            diam. Curabitur felis eros, vestibulum sed nisi eu, sodales aliquet lacus. Mauris lacinia quam quis feugiat
-            laoreet. Etiam lobortis aliquet euismod. Nunc dictum, sapien at egestas rutrum, dui dui fringilla erat, a
-            commodo augue augue vel magna. Sed tincidunt ante turpis, rhoncus commodo risus fringilla vel. Maecenas
-            lacinia nisl a sem ornare pharetra. Donec imperdiet justo et elementum iaculis.
-
-            Fusce volutpat lectus et nisl consectetur finibus. In vitae scelerisque augue, in varius eros. Nunc sapien
-            diam, euismod et pretium id, volutpat et tortor. In vulputate lorem quis dui vestibulum, vitae imperdiet
-            diam bibendum. Maecenas scelerisque orci a dolor vestibulum sagittis. Etiam quis finibus arcu, vel efficitur
-            diam. Curabitur felis eros, vestibulum sed nisi eu, sodales aliquet lacus. Mauris lacinia quam quis feugiat
-            laoreet. Etiam lobortis aliquet euismod. Nunc dictum, sapien at egestas rutrum, dui dui fringilla erat, a
-            commodo augue augue vel magna. Sed tincidunt ante turpis, rhoncus commodo risus fringilla vel. Maecenas
-            lacinia nisl a sem ornare pharetra. Donec imperdiet justo et elementum iaculis..
-          </span>
-        </div>
+      <div class="countertext">
+        <p class="sf_pro_display">{{countertext}}</p>
       </div>
 
     </div>
-    <div class="box">
-      <img src="assets/images/2.png">
+
+    <div class="box" *ngFor="let item of blogs">
+      <img src="https://portal.countr.ai/public/{{item.image}}" style="height: 170px;
+      width: 100%;
+      object-fit: contain;">
       <div style="padding:15px;">
-        <div class="title sf_pro_display">Blog Title</div>
+        <div class="title sf_pro_display">{{item.title}}</div>
         <div class="text2 sf_pro_display">
-          Donec a eros justo. Fusce egestas tristique ultrices. Nam tempor, augue nec tincidunt molestie, massa nunc
-          varius arcu, at scelerisque elit erat a magna. Donec quis erat at libero ultricellis... <span class="sp1">Read
-            more</span>
+          {{item.description}}
         </div>
       </div>
     </div>
