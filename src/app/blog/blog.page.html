@@ -35,14 +35,31 @@
 
     </div>
 
-    <div class="box" *ngFor="let item of blogs">
+    <div class="box" *ngFor="let item of blogs; let i=index;">
       <img src="https://portal.countr.ai/public/{{item.image}}" style="height: 170px;
       width: 100%;
-      object-fit: contain;">
+      object-fit: contain;border-radius: 14px 14px 0px 0px;">
       <div style="padding:15px;">
         <div class="title sf_pro_display">{{item.title}}</div>
-        <div class="text2 sf_pro_display">
-          {{item.description}}
+        <div class="sf_pro_display">
+          <div *ngIf="i !== activeIndex">
+            <div class="text2">
+              {{item.description}}
+            </div>
+          </div>
+
+          <div *ngIf="i === activeIndex">
+            <div class="text3">
+              {{item.description}}
+            </div>
+          </div>
+
+          <div *ngIf="item.description.length>135">
+            <div class="title" style="font-weight: 900;" [class.text3]="i === activeIndex" (click)="readmore(i)">
+              <span *ngIf="i !== activeIndex">READ MORE</span>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>

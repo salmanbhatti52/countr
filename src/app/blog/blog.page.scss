@@ -52,7 +52,22 @@
   text-align: justify;
   color: #404142;
   margin-top: 3%;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
+.text3{
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height:1.3;
+  text-align: justify;
+  color: #404142;
+  margin-top: 3%;
+
+}
+
 .sp1{
   color: #404142;
   font-weight: 600;

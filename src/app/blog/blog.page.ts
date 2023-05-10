@@ -18,7 +18,10 @@ export class BlogPage implements OnInit {
   show = false;
   blogs: any;
   countertext: any;
-
+  activeIndex: any;
+  showfulltext = false;
+  value = false;
+  text = 'WOrld CUp 2023WOrld CUp 2023WOrld CUp 2023WOrld CUp 2023WOrld CUp 2023WOrld CUp 2023WOrld CUp 2023WOrld CUp 2023 2023WOrld CUp 2023 '
   constructor(public user: UserService,
     public router: Router,
     public api: ApiService,
@@ -30,6 +33,10 @@ export class BlogPage implements OnInit {
       console.log('blog list', res);
       this.blogs = res.data
     })
+
+    let getlength = this.text.length
+    console.log(getlength);
+
   }
 
   systemsettings() {
@@ -49,12 +56,19 @@ export class BlogPage implements OnInit {
     })
   }
 
-  readmore() {
-    if (this.show == true) {
-      this.show = false
-    } else {
-      this.show = true
+  readmore(index: any) {
+    console.log('active index', index);
+
+
+    if (this.activeIndex = index) {
+      this.showfulltext = true
+      this.value = true
     }
+    // if (this.show == true) {
+    //   this.show = false
+    // } else {
+    //   this.show = true
+    // }
   }
   homeTab() {
     this.router.navigate(['/home']);

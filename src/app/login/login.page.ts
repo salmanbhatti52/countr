@@ -18,6 +18,7 @@ import { isPlatform } from '@ionic/angular';
 export class LoginPage implements OnInit {
   email: any = '';
   password: any = '';
+  welcome_bg: any;
   constructor(public router: Router,
     public menuCtrl: MenuController,
     public user: UserService,
@@ -28,6 +29,7 @@ export class LoginPage implements OnInit {
     if (!isPlatform('capacitor')) {
       GoogleAuth.initialize();
     }
+    this.welcome_bg = localStorage.getItem('bgimg')
   }
   ionViewDidEnter() {
     this.menuCtrl.enable(false);

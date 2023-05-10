@@ -4,6 +4,7 @@ import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { UserService } from './api/user.service';
 import { GoogleAuth } from '@codetrix-studio/capacitor-google-auth';
+import { ApiService } from './services/api.service';
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -29,27 +30,48 @@ export class AppComponent {
     // { title: 'Spam', url: '/folder/spam', icon: 'warning' },
   ];
   public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
+  welcome_bg: any;
   constructor(public router: Router,
-    public user: UserService) {
+    public user: UserService,
+    public api: ApiService) {
 
   }
 
   ngOnInit() {
     console.log('loggedId====', localStorage.getItem('loggedId'));
-
+    this.systemsettings()
     if (localStorage.getItem('loggedId') == null) {
       this.router.navigate(['welcome'])
     } else {
       this.router.navigate(['home'])
     }
   }
+  systemsettings() {
+    this.api.getRequest('system_settings').subscribe((res: any) => {
+      console.log(res);
+
+      res.data.map((value: any, index: any) => {
+
+        if (
+          value.type == "welcome_bg"
+        ) {
+          let bg_image = value.description
+          this.welcome_bg = 'https://www.portal.countr.ai/public/uploads/system_image/' + bg_image
+          localStorage.setItem('bgimg', this.welcome_bg)
+        }
+
+
+      });
+
+    })
+  }
 
   async pages(p: any) {
     if (p.title == 'Logout') {
       this.router.navigate(['login']);
       localStorage.removeItem('loggedId');
-      await GoogleAuth.signOut();
-      this.user.googleuserdetail = null
+      // await GoogleAuth.signOut();
+      // this.user.googleuserdetail = null
     }
   }
 }

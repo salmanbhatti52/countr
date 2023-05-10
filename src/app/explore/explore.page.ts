@@ -70,6 +70,7 @@ export class ExplorePage implements OnInit {
   }
   getsurveylists() {
     this.api.sendRequest('survey_list', { "users_customers_id": localStorage.getItem('loggedId') }).subscribe((res: any) => {
+      this.extra.hideLoader()
       console.log('survey_list=====', res);
       this.surveylists = res.data
     })
@@ -147,6 +148,7 @@ export class ExplorePage implements OnInit {
         survey_list_qs_answers: this.multiansarr
 
       })
+      this.extra.loadershow()
       this.api.sendRequest('survey_list_reponses', data).subscribe((res: any) => {
         console.log('survey_list_reponses', res);
         this.getsurveylists()
@@ -212,9 +214,11 @@ export class ExplorePage implements OnInit {
       survey_list_qs_answers: this.multiansarr
 
     })
+    this.extra.loadershow()
     this.api.sendRequest('survey_list_reponses', senddata).subscribe((res: any) => {
       console.log('survey_list_reponses', res);
-      this.multiansarr = []
+      this.multiansarr = [];
+      this.getsurveylists()
     })
   }
 

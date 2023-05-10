@@ -5,7 +5,7 @@ import { IonicModule } from '@ionic/angular';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../api/user.service';
 import { ApiService } from '../services/api.service';
-import { DomSanitizer } from '@angular/platform-browser';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 
 @Component({
@@ -20,15 +20,18 @@ import { DomSanitizer } from '@angular/platform-browser';
 export class TutorialPage implements OnInit {
   pagecomig: any;
   text: any;
-  videolink: any;
+  // videolink: any;
   link: any;
-
+  videoId: any;
+  videolink: any;
+  trustedVideoUrl!: SafeResourceUrl;
+  videos: any = []
   constructor(public router: Router,
     public user: UserService,
     public api: ApiService,
     public sanitizer: DomSanitizer,
     public activatedroute: ActivatedRoute) {
-    this.systemsettings()
+
   }
 
   ngOnInit() {
@@ -36,7 +39,7 @@ export class TutorialPage implements OnInit {
     console.log(this.pagecomig);
     // this.link = 'https://www.youtube.com/embed/l0eM1_JVqHE'
     // this.videolink = this.sanitizer.bypassSecurityTrustResourceUrl(this.link)
-
+    this.systemsettings()
   }
 
   systemsettings() {
@@ -51,13 +54,17 @@ export class TutorialPage implements OnInit {
           // this.link = 'https://www.youtube.com/embed/l0eM1_JVqHE'
           // this.videolink = this.sanitizer.bypassSecurityTrustResourceUrl(value.description)
           let link = value.description
-          let split = link.split('https://youtu.be/')
-          console.log(split);
-
+          let split = link.split('https://www.youtube.com/watch?v=');
           let videolinkurl = split[1]
-          this.photoURL(videolinkurl)
-          console.log('original link', value.description);
+          this.videoId = 'https://www.youtube.com/embed/' + videolinkurl
 
+          this.videolink = this.sanitizer.bypassSecurityTrustResourceUrl(this.videoId);
+          let data = {
+
+            link: this.videolink,
+
+          }
+          this.videos.push(data);
 
         }
         if (
@@ -68,20 +75,12 @@ export class TutorialPage implements OnInit {
         }
 
       });
-      console.log(this.videolink);
+
     })
   }
 
 
-  photoURL(item: any) {
 
-
-    let url = 'https://www.youtube.com/embed/' + item;
-    console.log('iframe url', url);
-    this.videolink = this.sanitizer.bypassSecurityTrustResourceUrl(url);
-
-
-  }
 
   setupProfile() {
     this.router.navigate(['/setup-profile']);

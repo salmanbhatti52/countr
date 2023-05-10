@@ -16,6 +16,7 @@ import { NgOtpInputModule } from 'ng-otp-input';
 export class OtpPage implements OnInit {
   userEmail: any;
   otp: any;
+  welcome_bg: any;
   constructor(public router: Router,
     public extra: ExtraService,
     public location: Location,
@@ -33,7 +34,8 @@ export class OtpPage implements OnInit {
     this.location.back()
   }
   ngOnInit() {
-    this.userEmail = localStorage.getItem('emailonforgot')
+    this.userEmail = localStorage.getItem('emailonforgot');
+    this.welcome_bg = localStorage.getItem('bgimg')
   }
   goNext() {
     if (localStorage.getItem('otp') == this.otp) {

@@ -30,12 +30,11 @@
 
     </div>
 
-    <div class="mgt_10">
-      <!-- <iframe width="100%" [src]="videolink"></iframe> -->
-      <iframe src="https://www.youtube.com/embed/l0eM1_JVqHE"
-        title="Getting started | How and why to sign in to YouTube and create a YouTube channel" frameborder="0"
+    <div class="mgt_10" *ngFor="let item of videos">
+      <iframe width="100%" [src]="item.link"></iframe>
+      <!-- <iframe [src]="videolink" frameborder="0"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-        allowfullscreen style="width: 100%;"></iframe>
+        allowfullscreen style="width: 100%;"></iframe> -->
 
       <!-- <video width="100%" controls="true">
         <source [src]="videolink">

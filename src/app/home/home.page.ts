@@ -80,6 +80,7 @@ export class HomePage implements OnInit {
     }
     this.api.sendRequest('survey_list_top', data).subscribe((res: any) => {
       console.log('survey_list_top=====', res);
+      this.extra.hideLoader()
       this.surveylists = res.data
     })
   }
@@ -153,6 +154,7 @@ export class HomePage implements OnInit {
       this.questionIndex++;
       if (this.questionlist.length - 1 == this.questionIndex) {
         this.btnValue = 'Done'
+
       }
       let data = JSON.stringify({
         survey_list_id: this.userSelectedSurvey.survey_list_id,
@@ -160,6 +162,7 @@ export class HomePage implements OnInit {
         survey_list_qs_answers: this.multiansarr
 
       })
+      this.extra.loadershow()
       this.api.sendRequest('survey_list_reponses', data).subscribe((res: any) => {
         console.log('survey_list_reponses', res);
         this.multiansarr = []
@@ -177,23 +180,25 @@ export class HomePage implements OnInit {
   }
   singletextAns(val: any) {
     console.log('single ans val', val);
-
+    this.questionIndex++;
     let data = {
       survey_list_qs_id: val.survey_list_qs_id,
       survey_list_qs_answers_id: 0,
       answer: this.ansintext
     }
     this.multiansarr.push(data)
-    this.questionIndex++;
+
     let senddata = JSON.stringify({
       survey_list_id: this.userSelectedSurvey.survey_list_id,
       users_customers_id: localStorage.getItem('loggedId'),
       survey_list_qs_answers: this.multiansarr
 
     })
+    this.extra.loadershow()
     this.api.sendRequest('survey_list_reponses', senddata).subscribe((res: any) => {
       console.log('survey_list_reponses', res);
       this.multiansarr = []
+      this.getsurveylists()
     })
   }
   mcqAnswer(ev: any) {

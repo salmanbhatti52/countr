@@ -14,6 +14,7 @@ import { ExtraService } from '../services/extra.service';
 })
 export class ForgotpasswordPage implements OnInit {
   email: any;
+  welcome_bg: any;
   constructor(public api: ApiService,
     public extra: ExtraService,
     public navCtrl: NavController,
@@ -29,6 +30,7 @@ export class ForgotpasswordPage implements OnInit {
   }
 
   ngOnInit() {
+    this.welcome_bg = localStorage.getItem('bgimg')
   }
   goback() {
     this.location.back()

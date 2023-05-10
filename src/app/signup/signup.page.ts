@@ -35,7 +35,7 @@ export class SignupPage implements OnInit {
   password: any = '';
   Confirmpassword: any = '';
   system_countries_id: any;
-
+  welcome_bg: any;
   system_states_id: any;
   constructor(public router: Router,
     public menuCtrl: MenuController,
@@ -60,7 +60,7 @@ export class SignupPage implements OnInit {
 
   }
   ngOnInit() {
-
+    this.welcome_bg = localStorage.getItem('bgimg')
   }
   getcountries() {
     this.extra.loadershow()
