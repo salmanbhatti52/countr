@@ -58,6 +58,9 @@ export class ExplorePage implements OnInit {
     public api: ApiService) { }
 
   ngOnInit() {
+
+  }
+  ionViewWillEnter() {
     this.getCategories()
     this.getsurveylists()
   }
@@ -70,9 +73,15 @@ export class ExplorePage implements OnInit {
   }
   getsurveylists() {
     this.api.sendRequest('survey_list', { "users_customers_id": localStorage.getItem('loggedId') }).subscribe((res: any) => {
-      this.extra.hideLoader()
       console.log('survey_list=====', res);
       this.surveylists = res.data
+      if (res.status == 'success') {
+        this.extra.hideLoader()
+
+      } else {
+        this.extra.hideLoader()
+        this.extra.presentToast(res.message)
+      }
     })
   }
   AllSurvey() {
@@ -81,6 +90,13 @@ export class ExplorePage implements OnInit {
     this.api.sendRequest('survey_list', { "users_customers_id": localStorage.getItem('loggedId') }).subscribe((res: any) => {
       console.log('survey_list=====', res);
       this.surveylists = res.data
+      if (res.status == 'success') {
+        this.extra.hideLoader()
+
+      } else {
+        this.extra.hideLoader()
+        this.extra.presentToast(res.message)
+      }
     })
   }
   surveyById(item: any, index: any) {
@@ -94,6 +110,13 @@ export class ExplorePage implements OnInit {
     this.api.sendRequest('survey_list_by_category_id', data).subscribe((res: any) => {
       console.log('survey_list_top=====', res);
       this.surveylists = res.data
+      if (res.status == 'success') {
+        this.extra.hideLoader()
+
+      } else {
+        this.extra.hideLoader()
+        this.extra.presentToast(res.message)
+      }
     })
   }
   selectsurvey(val: any, index: any) {

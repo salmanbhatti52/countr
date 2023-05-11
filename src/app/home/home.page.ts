@@ -71,7 +71,12 @@ export class HomePage implements OnInit {
   getCategories() {
     this.api.getRequest('survey_categories').subscribe((res: any) => {
       console.log('categoreis=====', res);
-      this.categories = res.data
+      if (res.status == 'success') {
+        this.categories = res.data
+      }
+      else {
+        this.extra.presentToast(res.message)
+      }
     })
   }
   getsurveylists() {
@@ -80,8 +85,15 @@ export class HomePage implements OnInit {
     }
     this.api.sendRequest('survey_list_top', data).subscribe((res: any) => {
       console.log('survey_list_top=====', res);
-      this.extra.hideLoader()
       this.surveylists = res.data
+      if (res.status == 'success') {
+        this.extra.hideLoader()
+
+      } else {
+        this.extra.hideLoader()
+        this.extra.presentToast(res.message)
+      }
+
     })
   }
   allSurevy() {
@@ -91,6 +103,13 @@ export class HomePage implements OnInit {
     this.api.sendRequest('survey_list_top', data).subscribe((res: any) => {
       console.log('survey_list_top=====', res);
       this.surveylists = res.data
+      if (res.status == 'success') {
+        this.extra.hideLoader()
+
+      } else {
+        this.extra.hideLoader()
+        this.extra.presentToast(res.message)
+      }
     })
   }
   surveyById(item: any) {
@@ -104,6 +123,13 @@ export class HomePage implements OnInit {
     this.api.sendRequest('survey_list_by_category_id', data).subscribe((res: any) => {
       console.log('survey_list_top=====', res);
       this.surveylists = res.data
+      if (res.status == 'success') {
+        this.extra.hideLoader()
+
+      } else {
+        this.extra.hideLoader()
+        this.extra.presentToast(res.message)
+      }
     })
   }
   selectsurvey(val: any, index: any) {
