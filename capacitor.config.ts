@@ -13,15 +13,18 @@ const config: CapacitorConfig = {
       forceCodeForRefreshToken: true,
     },
     SplashScreen: {
-      launchShowDuration: 3000,
+      launchShowDuration: 3500,
       launchAutoHide: true,
-      backgroundColor: "#ffffffff",
+      // backgroundColor: "#ffffffff",
       androidSplashResourceName: "splash",
       showSpinner: false,
       splashFullScreen: true,
       splashImmersive: true,
     }
   },
+  "android": {
+    "allowMixedContent": true
+  }
 };
 
 export default config;

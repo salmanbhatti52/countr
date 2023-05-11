@@ -13,13 +13,15 @@
 			"forceCodeForRefreshToken": true
 		},
 		"SplashScreen": {
-			"launchShowDuration": 3000,
+			"launchShowDuration": 5000,
 			"launchAutoHide": true,
-			"backgroundColor": "#ffffffff",
 			"androidSplashResourceName": "splash",
 			"showSpinner": false,
 			"splashFullScreen": true,
 			"splashImmersive": true
 		}
+	},
+	"android": {
+		"allowMixedContent": true
 	}
 }

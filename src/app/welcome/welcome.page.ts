@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
+import { IonicModule, MenuController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { ApiService } from '../services/api.service';
 import { ExtraService } from '../services/extra.service';
@@ -23,10 +23,19 @@ export class WelcomePage implements OnInit {
 
   constructor(public router: Router,
     public api: ApiService,
-    public extra: ExtraService) { }
+    public extra: ExtraService,
+    public menuCtrl: MenuController) { }
 
   ngOnInit() {
     this.systemsettings()
+  }
+
+  ionViewDidEnter() {
+    this.menuCtrl.enable(false);
+  }
+  ionViewWillLeave() {
+    // enable the root left menu when leaving this page
+    this.menuCtrl.enable(true);
   }
 
   systemsettings() {
