@@ -86,7 +86,7 @@ background-size: cover;">
         <ion-button expand="block" size="large" class="btn sf_pro_display btn_solid_primary"
           (click)="startIntro()">Signup</ion-button>
       </div>
-      <div>
+      <div *ngIf="social_type=='Yes'">
         <ion-button expand="block" fill="outline" size="large" class="btn sf_pro_display btn_outline_primary"
           (click)="Loginwithgoogle()"><img class="mgr_10" src="../../assets/images/icons/google_icon.svg" alt=""> Signup
           With Google</ion-button>

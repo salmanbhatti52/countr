@@ -32,6 +32,7 @@ export class AppComponent {
   ];
   public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
   welcome_bg: any;
+  social_type: any;
   constructor(public router: Router,
     public user: UserService,
     public api: ApiService,
@@ -71,7 +72,10 @@ export class AppComponent {
           this.welcome_bg = 'https://www.portal.countr.ai/public/uploads/system_image/' + bg_image
           localStorage.setItem('bgimg', this.welcome_bg)
         }
-
+        if (value.type == 'social_login') {
+          this.social_type = value.description
+          localStorage.setItem('social_type', this.social_type)
+        }
 
       });
 

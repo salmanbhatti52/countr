@@ -19,6 +19,7 @@ export class LoginPage implements OnInit {
   email: any = '';
   password: any = '';
   welcome_bg: any;
+  social_type: any;
   constructor(public router: Router,
     public menuCtrl: MenuController,
     public user: UserService,
@@ -31,6 +32,9 @@ export class LoginPage implements OnInit {
 
     }
     this.welcome_bg = localStorage.getItem('bgimg')
+    this.social_type = localStorage.getItem('social_type');
+    console.log(this.social_type);
+
   }
   ionViewDidEnter() {
     this.menuCtrl.enable(false);

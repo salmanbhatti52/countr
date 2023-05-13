@@ -37,6 +37,7 @@ export class SignupPage implements OnInit {
   system_countries_id: any;
   welcome_bg: any;
   system_states_id: any;
+  social_type: any;
   constructor(public router: Router,
     public menuCtrl: MenuController,
     public api: ApiService,
@@ -54,6 +55,8 @@ export class SignupPage implements OnInit {
   }
 
   ionViewWillEnter() {
+    this.social_type = localStorage.getItem('social_type');
+    console.log(this.social_type);
     // this.countries = Country.getAllCountries();
     // console.log(this.countries);
     this.getcountries()
