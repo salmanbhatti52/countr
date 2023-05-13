@@ -28,6 +28,7 @@ export class LoginPage implements OnInit {
   ngOnInit() {
     if (!isPlatform('capacitor')) {
       GoogleAuth.initialize();
+
     }
     this.welcome_bg = localStorage.getItem('bgimg')
   }

@@ -60,7 +60,11 @@ export class SignupPage implements OnInit {
 
   }
   ngOnInit() {
-    this.welcome_bg = localStorage.getItem('bgimg')
+    this.welcome_bg = localStorage.getItem('bgimg');
+    if (!isPlatform('capacitor')) {
+      GoogleAuth.initialize();
+
+    }
   }
   getcountries() {
     this.extra.loadershow()

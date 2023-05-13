@@ -13,8 +13,7 @@
 			"forceCodeForRefreshToken": true
 		},
 		"SplashScreen": {
-			"launchShowDuration": 3500,
-			"launchAutoHide": true,
+			"launchAutoHide": false,
 			"androidSplashResourceName": "splash",
 			"showSpinner": false,
 			"splashFullScreen": true,

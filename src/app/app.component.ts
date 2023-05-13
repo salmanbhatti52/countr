@@ -1,10 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
-import { IonicModule } from '@ionic/angular';
+import { IonicModule, Platform } from '@ionic/angular';
 import { UserService } from './api/user.service';
 import { GoogleAuth } from '@codetrix-studio/capacitor-google-auth';
 import { ApiService } from './services/api.service';
+import { SplashScreen } from '@capacitor/splash-screen';
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -33,18 +34,29 @@ export class AppComponent {
   welcome_bg: any;
   constructor(public router: Router,
     public user: UserService,
-    public api: ApiService) {
+    public api: ApiService,
+    public platform: Platform) {
 
   }
 
   ngOnInit() {
     console.log('loggedId====', localStorage.getItem('loggedId'));
     this.systemsettings()
-    if (localStorage.getItem('loggedId') == null) {
-      this.router.navigate(['welcome'])
-    } else {
-      this.router.navigate(['home'])
-    }
+    this.platform.ready().then(() => {
+      setTimeout(() => {
+
+
+        SplashScreen.hide();
+
+        if (localStorage.getItem('loggedId') == null) {
+          this.router.navigate(['welcome'])
+        } else {
+          this.router.navigate(['home'])
+        }
+
+        //aliiii
+      }, 3500);
+    });
   }
   systemsettings() {
     this.api.getRequest('system_settings').subscribe((res: any) => {
