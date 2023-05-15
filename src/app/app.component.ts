@@ -25,6 +25,7 @@ export class AppComponent {
     { title: 'Profile', url: 'profile', icon: 'person' },
     { title: 'Customer Support', url: 'customer-support', icon: 'mail' },
     { title: 'Change Password', url: 'changepassword', icon: 'archive' },
+    { title: 'Delete Account', url: 'deleteaccount', icon: 'warning' },
     { title: 'Logout', icon: 'trash' },
     // { title: 'Archived', url: '/folder/archived', icon: 'archive' },
     // { title: 'Trash', url: '/folder/trash', icon: 'trash' },

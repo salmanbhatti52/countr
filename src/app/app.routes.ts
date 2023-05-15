@@ -86,5 +86,9 @@ export const routes: Routes = [
     path: 'changepassword',
     loadComponent: () => import('./changepassword/changepassword.page').then( m => m.ChangepasswordPage)
   },
+  {
+    path: 'deleteaccount',
+    loadComponent: () => import('./deleteaccount/deleteaccount.page').then( m => m.DeleteaccountPage)
+  },
 
 ];
