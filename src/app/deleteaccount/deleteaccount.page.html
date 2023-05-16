@@ -28,12 +28,24 @@
   <div class="wrapper">
     <div class="font_cls sf_pro_display clr_heading">Why do you want to delete your Countr account?</div>
 
-    <div class="flex-c" *ngFor="let checkboxes of Checkboxes">
+    <!-- <div class="flex-c" *ngFor="let checkboxes of Checkboxes">
       <span class="font_14_500 clr_heading sf_pro_display">{{checkboxes.question}}</span>
       <ion-checkbox mode="md" class="check" [(ngModel)]="checkboxes.isItemChecked"
         (ionChange)="verifyEvent(checkboxes)">
       </ion-checkbox>
+    </div> -->
+
+    <div class="mgt_18">
+      <div class="input_lbl .clr_heading sf_pro_display">Delete Reason</div>
+      <ion-input type="text" inputmode="text" class="sf_pro_display mgt_10" placeholder=""
+        [(ngModel)]="delreason"></ion-input>
     </div>
+
+    <div class="input_lbl .clr_heading sf_pro_display" style="margin-top: 7%;">Commnets</div>
+
+    <ion-textarea rows="5" cols="5" class="desc-area sf_pro_display"
+      placeholder="Please provide additional information here..." [(ngModel)]="desc"></ion-textarea>
+
     <div style="margin-top: 8%;">
       <ion-button expand="block" fill="outline" size="large" class="btn sf_pro_display btn_outline_primary"
         (click)="delete()">Delete</ion-button>
