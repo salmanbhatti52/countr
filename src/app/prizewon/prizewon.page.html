@@ -1,0 +1,34 @@
+<ion-content class="bg" fullscreen>
+
+  <div style="padding: 25px 15px 20px;">
+    <div class="header">
+      <img (click)="user.goBack()" src="../../assets/images/icons/back_arrow.svg" alt="">
+
+      <div class="mgl_10">
+        <img (click)="user.goToNotifications()" src="../../assets/images/icons/bell_icon.svg" alt="">
+      </div>
+    </div>
+  </div>
+
+
+  <div style="text-align: center;padding: 20px 5px;">
+    <img src="assets/images/prize.svg">
+  </div>
+  <div class="wrapper">
+    <div class="sf_pro_display text1">Congratulation!</div>
+    <div class=" sf_pro_display text2">You won a prize</div>
+
+    <div class="box">
+      <div class="flex-c">
+        <div class="flex-c2">
+          <img src="assets/images/2tickets.svg">
+
+          <div class="boxtext sf_pro_display">2 Tickets</div>
+        </div>
+        <div>
+          <ion-button class="cbtn sf_pro_display">Claim Reward</ion-button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>

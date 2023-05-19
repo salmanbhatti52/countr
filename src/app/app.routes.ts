@@ -98,5 +98,9 @@ export const routes: Routes = [
     path: 'partners',
     loadComponent: () => import('./partners/partners.page').then( m => m.PartnersPage)
   },
+  {
+    path: 'prizewon',
+    loadComponent: () => import('./prizewon/prizewon.page').then( m => m.PrizewonPage)
+  },
 
 ];

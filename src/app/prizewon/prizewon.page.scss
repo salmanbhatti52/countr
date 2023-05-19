@@ -1,0 +1,55 @@
+.bg{
+  background-color: #fff;
+      --background: url('../../assets/images/prizebg.svg') no-repeat center center / cover;
+}
+.wrapper{
+  width: 90%;
+  margin: 0% auto;
+}
+.text1{
+  font-size: 40px;
+  text-align: center;
+  font-weight: 600;
+
+  color: #1DA1F2;
+
+}
+.text2{
+  font-size: 30px;
+  text-align: center;
+  font-weight: 600;
+
+  color:  #404142;
+
+}
+.box{
+  background: #FFFFFF;
+box-shadow: 0px 4px 13px rgba(0, 0, 0, 0.11);
+border-radius: 14px;
+margin-top: 5%;
+}
+.flex-c{
+  display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+}
+.flex-c2{
+  display: flex;
+    align-items: center;
+}
+.boxtext{
+  font-weight: 600;
+font-size: 24px;
+text-align: center;
+color: #404142;
+margin-left: 10px;
+}
+.cbtn{
+  height: 42px;
+  --background: #1DA1F2;
+  --border-radius: 40px;
+  font-weight: 500;
+  font-size: 14px;
+  color: #fff;
+}
