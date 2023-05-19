@@ -6,7 +6,7 @@ import { LoadingController, ToastController } from '@ionic/angular';
 })
 export class ExtraService {
   toast: any;
-
+  userprofile: any;
   constructor(public toastCtrl: ToastController,
     public loadingCtrl: LoadingController,) { }
 

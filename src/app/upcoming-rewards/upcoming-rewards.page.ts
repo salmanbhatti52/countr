@@ -15,25 +15,27 @@ import { UserService } from '../api/user.service';
 })
 export class UpcomingRewardsPage implements OnInit {
   checked!: boolean;
-  constructor(public router:Router,
-    public location:Location,
-    public user:UserService) { }
+  weblink: any;
+  constructor(public router: Router,
+    public location: Location,
+    public user: UserService) { }
 
   ngOnInit() {
+    this.weblink = localStorage.getItem('prize_explanation')
   }
 
-  goToNotifications(){
+  goToNotifications() {
     this.router.navigate(['/notifications']);
   }
 
-  goBack(){
+  goBack() {
     this.location.back();
   }
-  
-  sendChkBoxVal(ev:any){
+
+  sendChkBoxVal(ev: any) {
     console.log(ev);
     this.checked = ev.detail.checked;
     console.log(this.checked);
-    
+
   }
 }

@@ -1,0 +1,101 @@
+<ion-header [translucent]="true" class="ion-no-border">
+  <ion-toolbar class="bg_toolbar">
+    <ion-row style="padding: 10px 0px 0px;
+    align-items: center;">
+      <ion-col size="0.3"></ion-col>
+      <ion-col size="2">
+        <img (click)="user.goBack()" src="../../assets/images/icons/back_arrow.svg" alt="">
+      </ion-col>
+      <ion-col size="7" style="text-align: center;padding: 0px;">
+        <div class="toolbar_heading clr_heading sf_pro_display">Partners Survey</div>
+      </ion-col>
+      <ion-col size="2.6" style="text-align: end;right: 15px;">
+
+      </ion-col>
+
+    </ion-row>
+
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="wrapper pos_relative">
+    <div *ngFor="let ls of partnersurveys let i=index;" class=" mgt_20 card_header">
+
+      <div class="flex_center space_between pd_12" (click)="selectsurvey(ls,i)">
+        <div>
+          <div class="font_14_500 clr_heading sf_pro_display">{{ls.name}}</div>
+          <div class="font_12_500 clr_text sf_pro_display flex_center mgt_8">( {{ls.total_questions}} Question )
+
+          </div>
+        </div>
+        <div class="right">
+          <ion-button class="small_btn card_btn font_14_400 sf_pro_display"
+            fill="outline">{{ls.survey_categories.name}}</ion-button>
+
+          <div class="font_12_500 sf_pro_display clr_text mgt_7" style="display: flex;
+          align-items: center;
+          justify-content: flex-end;">
+            <img class="mgr_6" src="../../assets/images/icons/reward_icon.svg" alt="">
+            {{ls.survey_rewards.reward}}
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="i==selectedSurveyIndex">
+        <div *ngFor="let q of questionlist; let j = index;">
+          <div *ngIf="j==questionIndex">
+            <div style="color: #404142;
+            font-size: 14px;
+            font-weight: 500;
+            padding: 0px 0px 10px 10px!important;">{{q.name}}</div>
+
+            <div class=" card1_con_bg">
+              <div *ngIf="q.question_type=='Single Choice'" class="pd_10">
+                <ion-radio-group (ionChange)="mcqAnswer($event)" [(ngModel)]="singleValue">
+                  <ion-list>
+                    <ion-item *ngFor="let ans of q.answers;let i= index;" lines="none" class="itemcls">
+                      <ion-label class="sf_pro_display font_14_400 clr_heading">{{ans.name}}</ion-label>
+                      <ion-radio aria-label="Option Label" slot="end" [value]="ans" mode="md"></ion-radio>
+                    </ion-item>
+                  </ion-list>
+
+                </ion-radio-group>
+              </div>
+              <div *ngIf="q.question_type=='Multiple Choice'" class="pd_10">
+
+                <ion-list>
+                  <ion-item *ngFor="let ans of q.answers;let i= index;" lines="none" class="itemcls">
+                    <ion-label class="sf_pro_display font_14_400 clr_heading">{{ans.name}}</ion-label>
+                    <ion-checkbox aria-label="ion-cb-2-lbl" (ionChange)="checkboxClick($event)" slot="end" [value]="ans"
+                      mode="md"></ion-checkbox>
+                  </ion-item>
+                </ion-list>
+              </div>
+            </div>
+
+            <div *ngIf="q.question_type=='Multiple Choice' || q.question_type=='Single Choice'">
+              <ion-button (click)="UpdateQuestionIndex()">{{btnValue}}</ion-button>
+            </div>
+
+            <div *ngIf="q.question_type=='Text'">
+              <div class="card2_con_bg" style="padding: 10px;">
+                <div style="display: flex;
+                align-items: center;">
+                  <textarea placeholder="Type your answer here"
+                    class="font_14_500 sf_pro_display bg_white width_100_per text_area card2_textarea_height" name=""
+                    id="" cols="10" rows="2" [(ngModel)]="ansintext"></textarea>
+                  <img src="assets/images/sendicon.svg" style="margin-left: 3%;" (click)=" singletextAns(q)">
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</ion-content>

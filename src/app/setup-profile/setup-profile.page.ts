@@ -2,7 +2,7 @@ import { ApiService } from './../services/api.service';
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
+import { AlertController, IonicModule } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { IonModal } from '@ionic/angular';
 import { OverlayEventDetail } from '@ionic/core/components';
@@ -12,6 +12,7 @@ import { NativeGeocoder, NativeGeocoderResult, NativeGeocoderOptions } from '@aw
 import { LocationAccuracy } from '@awesome-cordova-plugins/location-accuracy/ngx';
 import { ExtraService } from '../services/extra.service';
 import { AndroidPermissions } from '@awesome-cordova-plugins/android-permissions/ngx';
+import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 declare var google: any;
 @Component({
   selector: 'app-setup-profile',
@@ -42,49 +43,54 @@ export class SetupProfilePage implements OnInit {
   number: any = ''
   address: any = '';
   profilepic: any;
+  currlocation: any;
+  userimg: any = 'assets/images/user1.jpg'
+  picurl: any;
   constructor(public router: Router,
     private nativeGeocoder: NativeGeocoder,
     private ngZone: NgZone,
     private androidPermissions: AndroidPermissions,
     public extra: ExtraService,
     private locationAccuracy: LocationAccuracy,
-    public api: ApiService
+    public api: ApiService,
+    public alertCtrl: AlertController
   ) { }
 
   ngOnInit() {
+    this.getCurrentLocatiuon()
   }
 
-  ngAfterViewInit(): void {
-    // Binding autocomplete to search input control
-    let autocomplete = new google.maps.places.Autocomplete(
-      this.searchElementRef.nativeElement
-    );
+  // ngAfterViewInit(): void {
+  //   // Binding autocomplete to search input control
+  //   let autocomplete = new google.maps.places.Autocomplete(
+  //     this.searchElementRef.nativeElement
+  //   );
 
-    autocomplete.addListener("place_changed", () => {
-      this.ngZone.run(() => {
-        //get the place result
-        let place: google.maps.places.PlaceResult = autocomplete.getPlace();
+  //   autocomplete.addListener("place_changed", () => {
+  //     this.ngZone.run(() => {
+  //       //get the place result
+  //       let place: google.maps.places.PlaceResult = autocomplete.getPlace();
 
-        //verify result
-        if (place.geometry === undefined || place.geometry === null) {
-          return;
-        }
+  //       //verify result
+  //       if (place.geometry === undefined || place.geometry === null) {
+  //         return;
+  //       }
 
-        console.log({ place }, place.geometry.location?.lat());
+  //       console.log({ place }, place.geometry.location?.lat());
 
-        //set latitude, longitude and zoom
-        this.latitude = place.geometry.location?.lat();
-        this.longitude = place.geometry.location?.lng();
-        this.address = place.formatted_address
-        console.log(this.latitude + ' ' + '' + this.longitude);
+  //       //set latitude, longitude and zoom
+  //       this.latitude = place.geometry.location?.lat();
+  //       this.longitude = place.geometry.location?.lng();
+  //       this.address = place.formatted_address
+  //       console.log(this.latitude + ' ' + '' + this.longitude);
 
-        localStorage.setItem("longitude", this.longitude);
-        localStorage.setItem("lattitude", this.latitude);
+  //       localStorage.setItem("longitude", this.longitude);
+  //       localStorage.setItem("lattitude", this.latitude);
 
 
-      });
-    });
-  }
+  //     });
+  //   });
+  // }
 
   // getCurrentLocatiuon() {
   //   // this.locationAccuracy.canRequest().then((canRequest: boolean) => {
@@ -168,7 +174,7 @@ export class SetupProfilePage implements OnInit {
     this.nativeGeocoder.reverseGeocode(latitude, longitude)
       .then((result: NativeGeocoderResult[]) => {
         console.log(result[0])
-        this.address = result[0].thoroughfare + ' ' + result[0].subLocality + ' ' + result[0].subAdministrativeArea + ' ' + result[0].countryName
+        this.currlocation = result[0].thoroughfare + ' ' + result[0].subLocality + ' ' + result[0].subAdministrativeArea + ' ' + result[0].countryName
 
       })
       .catch((error: any) => console.log(error));
@@ -180,6 +186,61 @@ export class SetupProfilePage implements OnInit {
 
 
   onWillDismiss(event: Event) {
+
+  }
+  async chooseImage() {
+
+    let confirm = await this.alertCtrl.create({
+      header: 'Upload Image',
+      cssClass: 'camera-alert',
+      buttons: [
+        {
+          text: 'Camera',
+          handler: async () => {
+            console.log('came inside Camera');
+
+            const image = await Camera.getPhoto({
+              quality: 75,
+              allowEditing: false,
+              resultType: CameraResultType.DataUrl,
+              source: CameraSource.Camera
+            }).then(res => {
+
+              this.userimg = res.dataUrl
+              this.picurl = this.userimg.split(',');
+              this.profilepic = this.picurl[1]
+            })
+          }
+        },
+        {
+          text: 'Gallery',
+          handler: async () => {
+            console.log('came inside yes');
+
+            const image = await Camera.getPhoto({
+              quality: 75,
+              allowEditing: false,
+              resultType: CameraResultType.DataUrl,
+              source: CameraSource.Photos,
+            }).then(res => {
+
+              this.userimg = res.dataUrl
+
+              this.picurl = this.userimg.split(',');
+              this.profilepic = this.picurl[1]
+              console.log(this.profilepic);
+
+
+
+            })
+
+
+
+          }
+        },
+      ]
+    })
+    await confirm.present();
 
   }
 
@@ -212,7 +273,15 @@ export class SetupProfilePage implements OnInit {
         console.log('prfofile response====', res);
         if (res.status == 'success') {
           this.extra.hideLoader()
-          localStorage.setItem('profileupdate', JSON.stringify(res.data[0]))
+
+          if (res.data[0].profile_pic == null) {
+            this.extra.userprofile = 'assets/images/user1.jpg'
+          } else {
+            let userimage = res.data[0].profile_pic
+            this.extra.userprofile = 'https://portal.countr.ai/public/' + userimage
+            localStorage.setItem('userprofile', this.extra.userprofile)
+          }
+
           this.router.navigate(['/social-links']);
         }
 

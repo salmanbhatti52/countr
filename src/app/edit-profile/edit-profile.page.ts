@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
+import { AlertController, IonicModule } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { UserService } from '../api/user.service';
 import { NgZone } from "@angular/core";
@@ -12,6 +12,7 @@ import { ExtraService } from '../services/extra.service';
 import { ApiService } from '../services/api.service';
 import { AndroidPermissions } from '@awesome-cordova-plugins/android-permissions/ngx';
 // import { Geolocation } from '@capacitor/geolocation';
+import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 declare var google: any;
 @Component({
   selector: 'app-edit-profile',
@@ -45,17 +46,20 @@ export class EditProfilePage implements OnInit {
   location: any;
   password: any;
   profilepic: any;
+  userimg: any;
   constructor(
     public router: Router,
     public user: UserService,
     private nativeGeocoder: NativeGeocoder,
     private ngZone: NgZone,
+    public alertCtrl: AlertController,
     public extra: ExtraService,
     private androidPermissions: AndroidPermissions,
     private locationAccuracy: LocationAccuracy,
     public api: ApiService) { }
 
   ngOnInit() {
+    this.getCurrentLocatiuon()
     this.getProfile()
   }
 
@@ -66,6 +70,11 @@ export class EditProfilePage implements OnInit {
       if (res.status == 'success') {
         this.extra.hideLoader();
         this.userdetail = res.data
+        if (this.userdetail.profile_pic == null) {
+          this.userimg = 'assets/images/user1.jpg'
+        } else {
+          this.userimg = 'https://portal.countr.ai/public/' + this.userdetail.profile_pic
+        }
         this.firstname = this.userdetail.first_name
         this.lastname = this.userdetail.last_name
         this.email = this.userdetail.email
@@ -80,37 +89,37 @@ export class EditProfilePage implements OnInit {
       }
     })
   }
-  ngAfterViewInit(): void {
-    // Binding autocomplete to search input control
-    let autocomplete = new google.maps.places.Autocomplete(
-      this.searchElementRef.nativeElement
-    );
+  // ngAfterViewInit(): void {
+  //   // Binding autocomplete to search input control
+  //   let autocomplete = new google.maps.places.Autocomplete(
+  //     this.searchElementRef.nativeElement
+  //   );
 
-    autocomplete.addListener("place_changed", () => {
-      this.ngZone.run(() => {
-        //get the place result
-        let place: google.maps.places.PlaceResult = autocomplete.getPlace();
+  //   autocomplete.addListener("place_changed", () => {
+  //     this.ngZone.run(() => {
+  //       //get the place result
+  //       let place: google.maps.places.PlaceResult = autocomplete.getPlace();
 
-        //verify result
-        if (place.geometry === undefined || place.geometry === null) {
-          return;
-        }
+  //       //verify result
+  //       if (place.geometry === undefined || place.geometry === null) {
+  //         return;
+  //       }
 
-        console.log({ place }, place.geometry.location?.lat());
+  //       console.log({ place }, place.geometry.location?.lat());
 
-        //set latitude, longitude and zoom
-        this.latitude = place.geometry.location?.lat();
-        this.longitude = place.geometry.location?.lng();
-        this.location = place.formatted_address
-        console.log(this.latitude + ' ' + '' + this.longitude);
+  //       //set latitude, longitude and zoom
+  //       this.latitude = place.geometry.location?.lat();
+  //       this.longitude = place.geometry.location?.lng();
+  //       this.location = place.formatted_address
+  //       console.log(this.latitude + ' ' + '' + this.longitude);
 
-        localStorage.setItem("longitude", this.longitude);
-        localStorage.setItem("lattitude", this.latitude);
+  //       localStorage.setItem("longitude", this.longitude);
+  //       localStorage.setItem("lattitude", this.latitude);
 
 
-      });
-    });
-  }
+  //     });
+  //   });
+  // }
   getCurrentLocatiuon() {
     this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.ACCESS_COARSE_LOCATION).then(
       result => {
@@ -213,7 +222,7 @@ export class EditProfilePage implements OnInit {
       .then((result: NativeGeocoderResult[]) => {
         console.log('addressss', result[0]);
         this.location = result[0].thoroughfare + ' ' + result[0].subLocality + ' ' + result[0].subAdministrativeArea + ' ' + result[0].countryName
-        // this.location = this.pretifyAddress(result[0]);
+        this.location = this.pretifyAddress(result[0]);
       })
       .catch((error: any) => console.log(error));
   }
@@ -226,6 +235,61 @@ export class EditProfilePage implements OnInit {
   //       throw (e);
   //     });
   // }
+  async chooseImage() {
+
+    let confirm = await this.alertCtrl.create({
+      header: 'Upload Image',
+      cssClass: 'camera-alert',
+      buttons: [
+        {
+          text: 'Camera',
+          handler: async () => {
+            console.log('came inside Camera');
+
+            const image = await Camera.getPhoto({
+              quality: 75,
+              allowEditing: false,
+              resultType: CameraResultType.DataUrl,
+              source: CameraSource.Camera
+            }).then(res => {
+
+              this.userimg = res.dataUrl
+              let picurl = this.userimg.split(',');
+              this.profilepic = picurl[1]
+            })
+          }
+        },
+        {
+          text: 'Gallery',
+          handler: async () => {
+            console.log('came inside yes');
+
+            const image = await Camera.getPhoto({
+              quality: 75,
+              allowEditing: false,
+              resultType: CameraResultType.DataUrl,
+              source: CameraSource.Photos,
+            }).then(res => {
+
+              this.userimg = res.dataUrl
+
+              let picurl = this.userimg.split(',');
+              this.profilepic = picurl[1]
+              console.log(this.profilepic);
+
+
+
+            })
+
+
+
+          }
+        },
+      ]
+    })
+    await confirm.present();
+
+  }
   updateProfile() {
     let data = {
       "users_customers_id": localStorage.getItem('loggedId'),
@@ -234,7 +298,7 @@ export class EditProfilePage implements OnInit {
       "phone": this.number,
       "location": this.location,
       "longitude": this.longitude,
-      "lattitude": this.latitude,
+      "lattitude": this.longitude,
       "notifications": "Yes",
       "profile_pic": this.profilepic
     }
@@ -254,9 +318,17 @@ export class EditProfilePage implements OnInit {
       this.api.sendRequest('update_profile_signup', data).subscribe((res: any) => {
         console.log('prfofile response====', res);
         if (res.status == 'success') {
-          this.extra.hideLoader()
-          localStorage.setItem('profileupdate', JSON.stringify(res.data[0]))
+          this.extra.hideLoader();
+
+          if (res.data[0].profile_pic == null) {
+            this.extra.userprofile = 'assets/images/user1.jpg'
+          } else {
+            let userimage = res.data[0].profile_pic
+            this.extra.userprofile = 'https://portal.countr.ai/public/' + userimage
+            localStorage.setItem('userprofile', this.extra.userprofile)
+          }
           this.router.navigate(['/profile']);
+
         }
 
         else {

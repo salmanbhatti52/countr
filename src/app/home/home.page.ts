@@ -56,6 +56,14 @@ export class HomePage implements OnInit {
     public extra: ExtraService) { }
 
   ngOnInit() {
+    console.log('dasdsadddddddddddddddddd', localStorage.getItem('userprofile'));
+
+    if (localStorage.getItem('userprofile') == null) {
+      this.extra.userprofile = 'assets/images/user1.jpg'
+    } else {
+      this.extra.userprofile = localStorage.getItem('userprofile')
+    }
+
 
   }
 

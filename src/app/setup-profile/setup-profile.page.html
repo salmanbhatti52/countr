@@ -12,25 +12,34 @@
   </ion-header> -->
   <div class="container">
     <div class="center clr_heading top_heading sf_pro_display">Setup Profile</div>
+    <div style="text-align: center;margin-top:5%;" (click)="chooseImage()">
+      <img src="{{userimg}}" style=" border-radius: 90%;
+    width: 175px;
+    height: 163px;">
+    </div>
 
     <div style="margin-top: 20%;">
-      <div class="input_lbl clr_heading sf_pro_display">First Name</div>
+      <div class="input_lbl1 clr_heading sf_pro_display">First Name</div>
       <ion-input type="text" inputmode="text" class="sf_pro_display mgt_10" placeholder="First Name"
         [(ngModel)]="firstname"></ion-input>
 
-      <div class="input_lbl clr_heading sf_pro_display mgt_18">Last Name</div>
+      <div class="input_lbl1 clr_heading sf_pro_display mgt_18">Last Name</div>
       <ion-input type="text" inputmode="text" class="sf_pro_display mgt_10" placeholder="Last Name"
         [(ngModel)]="lastname"></ion-input>
 
-      <div class="input_lbl clr_heading sf_pro_display mgt_18">Phone Number</div>
+      <div class="input_lbl1 clr_heading sf_pro_display mgt_18">Phone Number</div>
       <ion-input type="tel" inputmode="tel" class="sf_pro_display mgt_10" placeholder="Phone Number"
         [(ngModel)]="number"></ion-input>
 
-      <div class="input_lbl clr_heading sf_pro_display mgt_18">Location</div>
+      <div class="input_lbl1 clr_heading sf_pro_display mgt_18">Address</div>
+      <ion-input type="text" inputmode="text" class="sf_pro_display mgt_10" placeholder="Address"
+        [(ngModel)]="address"></ion-input>
+
+      <div class="input_lbl1 clr_heading sf_pro_display mgt_18">Location</div>
 
       <div class="input_with_icon pdr_18">
         <input type="search" inputmode="search" class="sf_pro_display c-input" placeholder="Location"
-          (keydown.enter)="$event.preventDefault()" #search [(ngModel)]="from">
+          (keydown.enter)="$event.preventDefault()" #search [(ngModel)]="currlocation">
         <img id="open-modal" src="../../assets/images/icons/location_icon.svg" alt="">
       </div>
 

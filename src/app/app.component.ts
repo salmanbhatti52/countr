@@ -1,11 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
-import { IonicModule, Platform } from '@ionic/angular';
+import { AlertController, IonicModule, MenuController, Platform } from '@ionic/angular';
 import { UserService } from './api/user.service';
 import { GoogleAuth } from '@codetrix-studio/capacitor-google-auth';
 import { ApiService } from './services/api.service';
 import { SplashScreen } from '@capacitor/splash-screen';
+import { ExtraService } from './services/extra.service';
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -22,7 +23,7 @@ export class AppComponent {
     // { title: 'Trash', url: '/folder/trash', icon: 'trash' },
     // { title: 'Spam', url: '/folder/spam', icon: 'warning' },
     { title: 'Home', url: 'home', icon: 'home' },
-    { title: 'Profile', url: 'profile', icon: 'person' },
+    { title: 'Partner Surveys', url: 'partners', icon: 'person' },
     { title: 'Customer Support', url: 'customer-support', icon: 'mail' },
     { title: 'Change Password', url: 'changepassword', icon: 'archive' },
     { title: 'Delete Account', url: 'deleteaccount', icon: 'warning' },
@@ -34,9 +35,13 @@ export class AppComponent {
   public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
   welcome_bg: any;
   social_type: any;
+  prize_explanation: any;
   constructor(public router: Router,
     public user: UserService,
     public api: ApiService,
+    public extra: ExtraService,
+    public menuCtrl: MenuController,
+    public alert: AlertController,
     public platform: Platform) {
 
   }
@@ -56,7 +61,7 @@ export class AppComponent {
           this.router.navigate(['home'])
         }
 
-        //aliiii
+
       }, 3500);
     });
   }
@@ -77,6 +82,10 @@ export class AppComponent {
           this.social_type = value.description
           localStorage.setItem('social_type', this.social_type)
         }
+        if (value.type == 'prize_explanation') {
+          this.prize_explanation = value.description
+          localStorage.setItem('prize_explanation', this.prize_explanation)
+        }
 
       });
 
@@ -84,11 +93,38 @@ export class AppComponent {
   }
 
   async pages(p: any) {
+    console.log(p);
+
     if (p.title == 'Logout') {
-      this.router.navigate(['login']);
-      localStorage.removeItem('loggedId');
-      // await GoogleAuth.signOut();
-      // this.user.googleuserdetail = null
+      const alert = await this.alert.create({
+        header: 'Are you ready to log out?',
+        buttons: [
+          {
+            text: 'No',
+            role: 'cancel',
+            handler: () => {
+              this.menuCtrl.close();
+            },
+          },
+          {
+            text: 'Yes',
+            role: 'confirm',
+            handler: () => {
+              localStorage.removeItem('loggedId');
+              this.router.navigate(['login'])
+              // await GoogleAuth.signOut();
+              // this.user.googleuserdetail = null
+              this.extra.presentToast('You are successfully logged out!');
+
+              this.menuCtrl.close();
+
+            },
+          },
+        ],
+
+      });
+      await alert.present();
     }
+
   }
 }

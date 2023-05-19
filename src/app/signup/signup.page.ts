@@ -107,6 +107,7 @@ export class SignupPage implements OnInit {
     this.api.sendRequest('system_states', data).subscribe((res: any) => {
       console.log('states====', res);
       this.states = res.data
+      this.states.sort((a: any, b: any) => a.name.localeCompare(b.name))
     })
 
   }

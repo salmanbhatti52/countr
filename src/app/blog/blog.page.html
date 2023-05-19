@@ -34,11 +34,40 @@
       </div>
 
     </div>
+    <div class="toolbar_heading clr_heading sf_pro_display">Featured</div>
 
+    <div class="box" *ngFor="let item of blogs_list_featured; let i=index;">
+      <img src="https://portal.countr.ai/public/{{item.image}}" style="height: 170px;
+      width: 100%;border-radius: 14px 14px 0px 0px;">
+      <div style="padding:15px;">
+        <div class="title sf_pro_display">{{item.title}}</div>
+        <div class="sf_pro_display">
+          <div *ngIf="i !== factiveIndex">
+            <div class="text2">
+              {{item.description}}
+            </div>
+          </div>
+
+          <div *ngIf="i === factiveIndex">
+            <div class="text3">
+              {{item.description}}
+            </div>
+          </div>
+
+          <div *ngIf="item.description.length>135">
+            <div class="title" style="font-weight: 900;" [class.text3]="i === factiveIndex" (click)="freadmore(i)">
+              <span *ngIf="i !== factiveIndex">READ MORE</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="toolbar_heading clr_heading sf_pro_display" style="margin-top:5%;">Others</div>
     <div class="box" *ngFor="let item of blogs; let i=index;">
       <img src="https://portal.countr.ai/public/{{item.image}}" style="height: 170px;
-      width: 100%;
-      object-fit: contain;border-radius: 14px 14px 0px 0px;">
+      width: 100%;border-radius: 14px 14px 0px 0px;">
       <div style="padding:15px;">
         <div class="title sf_pro_display">{{item.title}}</div>
         <div class="sf_pro_display">

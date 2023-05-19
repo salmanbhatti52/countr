@@ -19,9 +19,11 @@ export class BlogPage implements OnInit {
   blogs: any;
   countertext: any;
   activeIndex: any;
+  factiveIndex: any;
   showfulltext = false;
   value = false;
-  text = 'WOrld CUp 2023WOrld CUp 2023WOrld CUp 2023WOrld CUp 2023WOrld CUp 2023WOrld CUp 2023WOrld CUp 2023WOrld CUp 2023 2023WOrld CUp 2023 '
+  blogs_list_featured: any;
+
   constructor(public user: UserService,
     public router: Router,
     public api: ApiService,
@@ -29,14 +31,20 @@ export class BlogPage implements OnInit {
 
   ngOnInit() {
     this.systemsettings()
+    this.featuredblog()
     this.api.getRequest('blogs_list').subscribe((res: any) => {
       console.log('blog list', res);
       this.blogs = res.data
     })
 
-    let getlength = this.text.length
-    console.log(getlength);
 
+
+  }
+  featuredblog() {
+    this.api.getRequest('blogs_list_featured').subscribe((res: any) => {
+      console.log('blog list', res);
+      this.blogs_list_featured = res.data
+    })
   }
 
   systemsettings() {
@@ -69,6 +77,16 @@ export class BlogPage implements OnInit {
     // } else {
     //   this.show = true
     // }
+  }
+  freadmore(index: any) {
+    console.log('active index', index);
+
+
+    if (this.factiveIndex = index) {
+      this.showfulltext = true
+      this.value = true
+    }
+
   }
   homeTab() {
     this.router.navigate(['/home']);

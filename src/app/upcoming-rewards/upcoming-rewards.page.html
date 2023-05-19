@@ -9,7 +9,7 @@
         </div>
       </div>
     </div>
-    
+
   </ion-toolbar>
 </ion-header>
 
@@ -24,20 +24,41 @@
       <div class="clr_heading font_18_700 sf_pro_display">Your Preferences</div>
       <div class="mgt_18 pd_lr_10">
         <div class="flex_center space_between">
-          <div class="flex_center"><ion-checkbox slot="start" checked="true" (ionChange)="sendChkBoxVal($event)" class="checkbox"></ion-checkbox> <span class="mgr_6 font_16_500 sf_pro_display clr_heading">Points</span>   <img src="../../assets/images/icons/hundred_points.svg" alt=""></div>
-          <div class="flex_center"><ion-checkbox slot="start" checked="true" (ionChange)="sendChkBoxVal($event)" class="checkbox"></ion-checkbox> 
-           <span class="mgr_6 font_16_500 sf_pro_display clr_heading">Tickets</span>  <img src="../../assets/images/icons/tickets.svg" alt=""></div>
+          <div class="flex_center"><ion-checkbox slot="start" checked="true" (ionChange)="sendChkBoxVal($event)"
+              class="checkbox"></ion-checkbox> <span class="mgr_6 font_16_500 sf_pro_display clr_heading">Points</span>
+            <img src="../../assets/images/icons/hundred_points.svg" alt="">
+          </div>
+          <div class="flex_center"><ion-checkbox slot="start" checked="true" (ionChange)="sendChkBoxVal($event)"
+              class="checkbox"></ion-checkbox>
+            <span class="mgr_6 font_16_500 sf_pro_display clr_heading">Tickets</span> <img
+              src="../../assets/images/icons/tickets.svg" alt="">
+          </div>
         </div>
-        <div class="flex_center mgt_18"><ion-checkbox slot="start" (ionChange)="sendChkBoxVal($event)" class="checkbox"></ion-checkbox> <span class="mgr_6 font_16_500 sf_pro_display clr_heading">Coupons</span>  <img src="../../assets/images/icons/coupon.svg" alt=""></div>
+        <div class="flex_center space_between">
+          <div class="flex_center"><ion-checkbox slot="start" (ionChange)="sendChkBoxVal($event)"
+              class="checkbox"></ion-checkbox> <span class="mgr_6 font_16_500 sf_pro_display clr_heading">Coupons</span>
+            <img src="../../assets/images/icons/coupon.svg" alt="">
+          </div>
+          <div class="flex_center"><ion-checkbox slot="start" (ionChange)="sendChkBoxVal($event)"
+              class="checkbox"></ion-checkbox> <span class="mgr_6 font_16_500 sf_pro_display clr_heading">Grand
+              prize</span> <img src="../../assets/images/icons/coupon.svg" alt=""></div>
+        </div>
+
       </div>
     </div>
-
+    <div class="clr_heading  sf_pro_display flex-c br_14">
+      <div class="font_18_700">Prize Explantion</div>
+      <div>
+        <a href="{{weblink}}" target="_blank" class="anchor">Click Here</a>
+      </div>
+    </div>
     <div class="clr_heading font_18_700 sf_pro_display mgt_18 pd_lr_10">Upcoming Rewards</div>
 
     <div class="bg_B9FCEC br_14 pd_12 mgt_18">
       <div class="font_14_500 sf_pro_display clr_heading">Refer a friend and get rewarded</div>
       <div class="flex_center space_between mgt_10">
-        <div class="flex_center"><img class="mgr_10" src="../../assets/images/icons/tickets.svg" alt=""> <span class="font_24_600 sf_pro_display clr_heading">2 Tickets</span> </div>
+        <div class="flex_center"><img class="mgr_10" src="../../assets/images/icons/tickets.svg" alt=""> <span
+            class="font_24_600 sf_pro_display clr_heading">2 Tickets</span> </div>
         <ion-button class="reward_btn font_14_500 sf_pro_display">Claim Reward</ion-button>
       </div>
     </div>
@@ -45,7 +66,8 @@
     <div class="bg_EAD5EE br_14 pd_12 mgt_18">
       <div class="font_14_500 sf_pro_display clr_heading">Refer a friend and get rewarded</div>
       <div class="flex_center space_between mgt_10">
-        <div class="flex_center"><img class="mgr_10" src="../../assets/images/icons/hundred_points.svg" alt=""> <span class="font_24_600 sf_pro_display clr_heading">10 Points</span> </div>
+        <div class="flex_center"><img class="mgr_10" src="../../assets/images/icons/hundred_points.svg" alt=""> <span
+            class="font_24_600 sf_pro_display clr_heading">10 Points</span> </div>
         <ion-button class="reward_btn font_14_500 sf_pro_display">Claim Reward</ion-button>
       </div>
     </div>
@@ -53,7 +75,8 @@
     <div class="bg_D6EDC4 br_14 pd_12 mgt_18">
       <div class="font_14_500 sf_pro_display clr_heading">Refer a friend and get rewarded</div>
       <div class="flex_center space_between mgt_10">
-        <div class="flex_center"><img class="mgr_10" src="../../assets/images/icons/tickets.svg" alt=""> <span class="font_24_600 sf_pro_display clr_heading">2 Tickets</span> </div>
+        <div class="flex_center"><img class="mgr_10" src="../../assets/images/icons/tickets.svg" alt=""> <span
+            class="font_24_600 sf_pro_display clr_heading">2 Tickets</span> </div>
         <ion-button class="reward_btn font_14_500 sf_pro_display">Claim Reward</ion-button>
       </div>
     </div>

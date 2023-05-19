@@ -23,6 +23,7 @@ export class ProfilePage implements OnInit {
   phone: any;
   location: any;
   password: any;
+  profileimg: any = 'assets/images/user1.jpg';
 
   constructor(public router: Router,
     public user: UserService,
@@ -45,12 +46,18 @@ export class ProfilePage implements OnInit {
       if (res.status == 'success') {
         this.extra.hideLoader()
         this.userdetail = res.data
+        if (this.userdetail.profile_pic == null) {
+          this.profileimg = 'assets/images/user1.jpg'
+        } else {
+          this.profileimg = 'https://portal.countr.ai/public/' + this.userdetail.profile_pic
+        }
         this.firstname = this.userdetail.first_name
         this.lastname = this.userdetail.last_name
         this.email = this.userdetail.email
         this.phone = this.userdetail.phone
         this.location = this.userdetail.location
         this.password = this.userdetail.password
+
       } else {
         this.extra.hideLoader()
         this.extra.presentToast(res.message)

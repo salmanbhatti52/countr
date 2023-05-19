@@ -6,3 +6,19 @@
     // flex-direction: column;
     // justify-content: space-between;
 }
+.flex-c{
+  display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #F7F8F8;
+    margin-top: 5%;
+    padding: 16px;
+}
+.anchor{
+  color: #FFFFFC;
+    background: #1DA1F2;
+    text-decoration: none;
+    padding: 10px;
+    font-size: 14px;
+    border-radius: 8px;
+}

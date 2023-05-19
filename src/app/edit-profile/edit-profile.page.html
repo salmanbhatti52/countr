@@ -20,10 +20,14 @@
     </ion-toolbar>
   </ion-header> -->
   <div class="container">
-    <div class="right">
+    <!-- <div class="right">
       <img src="../../assets/images/icons/edit_def.svg" alt="">
+    </div> -->
+    <div style="text-align: center;" (click)="chooseImage()">
+      <img src="{{userimg}}" style=" border-radius: 90%;
+    width: 150px;
+    height: 140px;">
     </div>
-
     <div>
       <div class="input_lbl clr_heading sf_pro_display">First Name</div>
       <ion-input type="text" inputmode="text" class="sf_pro_display mgt_10" placeholder="First Name"
@@ -44,18 +48,18 @@
       <ion-input type="tel" inputmode="tel" class="sf_pro_display mgt_10" placeholder="+41256897646"
         [(ngModel)]="number"></ion-input>
 
-      <div class="input_lbl clr_heading sf_pro_display mgt_18">Location</div>
+      <div class="input_lbl clr_heading sf_pro_display mgt_18">Address</div>
 
       <div class="input_with_icon pdr_18">
-        <input type="search" inputmode="search" class="sf_pro_display c-input" placeholder="Location"
+        <input type="search" inputmode="search" class="sf_pro_display c-input" placeholder="Address"
           [(ngModel)]="location" #search aria-label="search">
         <img src="../../assets/images/icons/location_icon.svg" alt="" (click)="getCurrentLocatiuon()">
       </div>
-      <ion-list [hidden]="listishiddenFrom" style="padding: 0px !important;">
+      <!-- <ion-list [hidden]="listishiddenFrom" style="padding: 0px !important;">
         <ion-item *ngFor="let item of autocompleteItems" tappable style="--background: black; color: white">
           {{ item.description }}
         </ion-item>
-      </ion-list>
+      </ion-list> -->
 
       <!-- <div>
         <div class="input_lbl clr_heading sf_pro_display mgt_15">Password</div>

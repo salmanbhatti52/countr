@@ -40,8 +40,7 @@
   <div class="container">
     <div class="bg_primary br_10 pd_12">
       <div class="flex_center space_between">
-        <div class="font_18_700 sf_pro_display clr_white">Today's <br>
-          Rewards</div>
+        <div class="font_18_700 sf_pro_display clr_white">Reward Count</div>
         <img src="../../assets/images/gift.svg" alt="">
       </div>
       <div class="flex_center space_between mgt_10">
@@ -75,6 +74,11 @@
       <div class="font_18_700 sf_pro_display clr_heading">Personal Info</div>
       <img (click)="goToEditProfile()" src="../../assets/images/icons/edit_info.svg" alt="">
     </div>
+    <div style="text-align: center;margin-top:5%;">
+      <img src="{{profileimg}}" style=" border-radius: 90%;
+    width: 150px;
+    height: 140px;">
+    </div>
 
     <div class="pd_8">
       <div class="mgt_6">
@@ -95,7 +99,7 @@
         <div class="bg_F7F8F8 br_10 height_52 font_14_400 sf_pro_display clr_heading pd_17_16">{{phone}}</div>
       </div>
       <div class="mgt_10">
-        <div class="pd_10 font_16_500 sf_pro_display clr_heading">Location</div>
+        <div class="pd_10 font_16_500 sf_pro_display clr_heading">Address</div>
         <div class="bg_F7F8F8 br_10 height_52  pd_17_16 flex_center space_between">
           <div class="font_14_400 sf_pro_display clr_heading">{{location}}</div>
           <img src="../../assets/images/icons/location_icon.svg" alt="">

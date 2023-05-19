@@ -1,0 +1,40 @@
+<ion-header [translucent]="true" class="ion-no-border">
+  <ion-toolbar class="bg_toolbar">
+    <ion-row style="padding: 10px 0px 0px;
+    align-items: center;">
+      <ion-col size="0.3"></ion-col>
+      <ion-col size="2">
+        <ion-menu-toggle>
+          <ion-buttons>
+            <div style="width: 100%">
+              <img src="assets/images/icons/side_menu_icon.svg">
+            </div>
+          </ion-buttons>
+        </ion-menu-toggle>
+      </ion-col>
+      <ion-col size="7" style="text-align: center;padding: 0px;">
+        <div class="toolbar_heading clr_heading sf_pro_display">Partners</div>
+      </ion-col>
+      <ion-col size="2.6" style="text-align: end;right: 15px;">
+
+      </ion-col>
+
+    </ion-row>
+
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="wrapper">
+    <div class="pd_8 mgt_10">
+      <div class="bg_F7F8F8 br_10 flex-c" *ngFor="let item of partners" (click)="goto(item)">
+        <div class="font_14_400 sf_pro_display clr_heading flex_center"><img class="mgr_20"
+            src="https://portal.countr.ai/public/{{item.user_image}}"
+            style="width:50px;height:45px;border-radius: 90%;">{{item.first_name}}</div>
+        <img src="../../assets/images/icons/navigate_next.svg" alt="">
+
+      </div>
+    </div>
+  </div>
+</ion-content>

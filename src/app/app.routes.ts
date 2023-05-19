@@ -90,5 +90,13 @@ export const routes: Routes = [
     path: 'deleteaccount',
     loadComponent: () => import('./deleteaccount/deleteaccount.page').then( m => m.DeleteaccountPage)
   },
+  {
+    path: 'partnersurveys',
+    loadComponent: () => import('./partnersurveys/partnersurveys.page').then( m => m.PartnersurveysPage)
+  },
+  {
+    path: 'partners',
+    loadComponent: () => import('./partners/partners.page').then( m => m.PartnersPage)
+  },
 
 ];
