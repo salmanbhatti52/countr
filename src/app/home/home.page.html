@@ -54,7 +54,7 @@
       <swiper [config]="{slidesPerView:3.4, spaceBetween:18, initialSlide:0, speed:400}" [pagination]="false"
         style="padding: 8px;">
         <ng-template swiperSlide class="categories">
-          <div class="center" (click)="allSurevy()">
+          <div class="center" (click)="allSurevyshow()">
             <div>
               <img src="../../assets/images/all.png" style="width: 60px;
               border-radius: 90px;
@@ -142,7 +142,7 @@
 
               <div class=" card1_con_bg">
                 <div *ngIf="q.question_type=='Single Choice'" class="pd_10">
-                  <ion-radio-group (ionChange)="mcqAnswer($event)" [(ngModel)]="singleValue">
+                  <ion-radio-group (ionChange)="mcqAnswer($event,'single')">
                     <ion-list>
                       <ion-item *ngFor="let ans of q.answers;let i= index;" lines="none" class="itemcls">
                         <ion-label class="sf_pro_display font_14_400 clr_heading">{{ans.name}}</ion-label>
@@ -152,6 +152,22 @@
 
                   </ion-radio-group>
                 </div>
+
+                <!-- Multilevel Choice sub answers array-->
+                <div *ngIf="multianswers==true">
+                  <div *ngIf="questionType=='Multilevel Choice'" class="pd_10">
+                    <ion-radio-group (ionChange)="mcqAnswer($event,'multi')">
+                      <ion-list>
+                        <ion-item *ngFor="let subans of subanswers;let i= index;" lines="none" class="itemcls">
+                          <ion-label class="sf_pro_display font_14_400 clr_heading">{{subans.name}}</ion-label>
+                          <ion-radio aria-label="Option Label" slot="end" [value]="subans" mode="md"></ion-radio>
+                        </ion-item>
+                      </ion-list>
+
+                    </ion-radio-group>
+                  </div>
+                </div>
+
                 <div *ngIf="q.question_type=='Multiple Choice'" class="pd_10">
 
                   <ion-list>
@@ -167,6 +183,9 @@
               <div *ngIf="q.question_type=='Multiple Choice' || q.question_type=='Single Choice'">
                 <ion-button (click)="UpdateQuestionIndex()">{{btnValue}}</ion-button>
               </div>
+              <!-- <div *ngIf="q.question_type=='Multilevel Choice'">
+                <ion-button (click)="Updatemultiquestion()">{{btnValue1}}</ion-button>
+              </div> -->
 
               <div *ngIf="q.question_type=='Text'">
                 <div class="card2_con_bg" style="padding: 10px;">

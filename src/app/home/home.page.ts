@@ -43,13 +43,22 @@ export class HomePage implements OnInit {
   btnValue = 'Next'
   userSelectedSurvey: any;
   ansval: any;
-  survey_list_qs_answers_id: any;
+
   multiansarr: any = [];
   multival: any = '';
   term: any;
   ansintext: any = '';
   categoryname: any;
   categoryitem = false;
+  btnValue1 = 'Next'
+  survey_list_qs_answers_id: any;
+  survey_list_qs_id: any;
+  subanswers: any;
+  multianswers = false;
+  questionType: any;
+  counter = 0;
+  ansobjarr: any;
+  parseobjarryay: any;
   constructor(public router: Router,
     public user: UserService,
     public api: ApiService,
@@ -103,6 +112,10 @@ export class HomePage implements OnInit {
       }
 
     })
+  }
+  allSurevyshow() {
+    this.categoryname = 'All'
+    this.allSurevy()
   }
   allSurevy() {
     let data = {
@@ -183,29 +196,56 @@ export class HomePage implements OnInit {
   }
 
   UpdateQuestionIndex() {
-    console.log(this.multiansarr);
-    if (this.multiansarr.length != 0) {
-      this.questionIndex++;
-      if (this.questionlist.length - 1 == this.questionIndex) {
-        this.btnValue = 'Done'
-
-      }
-      let data = JSON.stringify({
-        survey_list_id: this.userSelectedSurvey.survey_list_id,
-        users_customers_id: localStorage.getItem('loggedId'),
-        survey_list_qs_answers: this.multiansarr
-
-      })
-      this.extra.loadershow()
-      this.api.sendRequest('survey_list_reponses', data).subscribe((res: any) => {
-        console.log('survey_list_reponses', res);
-        this.multiansarr = []
-        this.getsurveylists()
-      })
-
+    this.ansobjarr = localStorage.getItem('ansobj')
+    if (this.ansobjarr != null) {
+      this.parseobjarryay = JSON.parse(this.ansobjarr)
+      this.multiansarr.push(this.parseobjarryay)
     } else {
-      this.extra.presentToast('Please select an option')
+      this.multiansarr
     }
+
+    console.log(this.multiansarr);
+    let data = {
+      "parent_qs_id": this.survey_list_qs_id,
+      "parent_qs_answers_id": this.survey_list_qs_answers_id
+    }
+    this.api.sendRequest('get_child_qs', data).subscribe((res: any) => {
+      console.log('multilevel answer response=====', res);
+      if (res.status == 'success') {
+        this.multianswers = true
+        this.questionType = res.data[0].questions.question_type
+        this.subanswers = res.data[0].answers
+      } else {
+        this.multianswers = false;
+        if (this.multiansarr.length != 0) {
+          this.questionIndex++;
+          if (this.questionlist.length - 1 == this.questionIndex) {
+            this.btnValue = 'Done'
+
+          }
+          let data = JSON.stringify({
+            survey_list_id: this.userSelectedSurvey.survey_list_id,
+            users_customers_id: localStorage.getItem('loggedId'),
+            survey_list_qs_answers: this.multiansarr
+
+          })
+          this.extra.loadershow()
+          this.api.sendRequest('survey_list_reponses', data).subscribe((res: any) => {
+            console.log('survey_list_reponses', res);
+            if (res.status == 'success') {
+              localStorage.removeItem('ansobj')
+              this.multiansarr = []
+              this.getsurveylists()
+            }
+
+          })
+
+        } else {
+          this.extra.presentToast('Please select an option')
+        }
+      }
+    })
+
 
 
 
@@ -231,23 +271,40 @@ export class HomePage implements OnInit {
     this.extra.loadershow()
     this.api.sendRequest('survey_list_reponses', senddata).subscribe((res: any) => {
       console.log('survey_list_reponses', res);
+      this.ansintext = ''
       this.multiansarr = []
       this.getsurveylists()
     })
   }
-  mcqAnswer(ev: any) {
+
+  mcqAnswer(ev: any, type: any) {
     // this.multiansarr = [];
     console.log(ev);
+    console.log('type we get====', type);
+
     this.singleValue = ev.detail.value
+
+    //when question is multilevel
+    this.survey_list_qs_id = this.singleValue.survey_list_qs_id,
+      this.survey_list_qs_answers_id = this.singleValue.survey_list_qs_answers_id
+    ////////---------////////
+
     // this.ansval = this.selectedValue.name
     // this.survey_list_qs_answers_id = this.selectedValue.survey_list_qs_answers_id
-    let data = {
+    let data: any = {
       survey_list_qs_id: this.singleValue.survey_list_qs_id,
       survey_list_qs_answers_id: this.singleValue.survey_list_qs_answers_id,
       answer: this.singleValue.name
     }
-    this.multiansarr.push(data)
+
+    localStorage.setItem('ansobj', JSON.stringify(data))
+
+
+
+
+
   }
+
   checkboxClick(event: any) {
     // this.multiansarr = [];
     console.log('event', event);
@@ -271,6 +328,21 @@ export class HomePage implements OnInit {
 
 
   }
+
+  // Updatemultiquestion() {
+
+  //   let data = {
+  //     "parent_qs_id": this.survey_list_qs_id,
+  //     "parent_qs_answers_id": this.survey_list_qs_answers_id
+  //   }
+  //   this.api.sendRequest('get_child_qs', data).subscribe((res: any) => {
+  //     console.log('multilevel answer response=====', res);
+  //     if (res.status == 'success') {
+  //       this.multianswers = true
+  //       this.subanswers = res.data[0].answers
+  //     }
+  //   })
+  // }
 
 
   getanswersvalues(val: any, index: any) {

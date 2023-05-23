@@ -190,57 +190,68 @@ export class SetupProfilePage implements OnInit {
   }
   async chooseImage() {
 
-    let confirm = await this.alertCtrl.create({
-      header: 'Upload Image',
-      cssClass: 'camera-alert',
-      buttons: [
-        {
-          text: 'Camera',
-          handler: async () => {
-            console.log('came inside Camera');
+    await Camera.getPhoto({
+      quality: 90,
+      allowEditing: false,
+      resultType: CameraResultType.DataUrl,
+      source: CameraSource.Photos
+    }).then(res => {
 
-            const image = await Camera.getPhoto({
-              quality: 75,
-              allowEditing: false,
-              resultType: CameraResultType.DataUrl,
-              source: CameraSource.Camera
-            }).then(res => {
-
-              this.userimg = res.dataUrl
-              this.picurl = this.userimg.split(',');
-              this.profilepic = this.picurl[1]
-            })
-          }
-        },
-        {
-          text: 'Gallery',
-          handler: async () => {
-            console.log('came inside yes');
-
-            const image = await Camera.getPhoto({
-              quality: 75,
-              allowEditing: false,
-              resultType: CameraResultType.DataUrl,
-              source: CameraSource.Photos,
-            }).then(res => {
-
-              this.userimg = res.dataUrl
-
-              this.picurl = this.userimg.split(',');
-              this.profilepic = this.picurl[1]
-              console.log(this.profilepic);
-
-
-
-            })
-
-
-
-          }
-        },
-      ]
+      this.userimg = res.dataUrl
+      let picurl = this.userimg.split(',');
+      this.profilepic = picurl[1]
     })
-    await confirm.present();
+    // let confirm = await this.alertCtrl.create({
+    //   header: 'Upload Image',
+    //   cssClass: 'camera-alert',
+    //   buttons: [
+    //     {
+    //       text: 'Camera',
+    //       handler: async () => {
+    //         console.log('came inside Camera');
+
+    //         const image = await Camera.getPhoto({
+    //           quality: 75,
+    //           allowEditing: false,
+    //           resultType: CameraResultType.DataUrl,
+    //           source: CameraSource.Camera
+    //         }).then(res => {
+
+    //           this.userimg = res.dataUrl
+    //           this.picurl = this.userimg.split(',');
+    //           this.profilepic = this.picurl[1]
+    //         })
+    //       }
+    //     },
+    //     {
+    //       text: 'Gallery',
+    //       handler: async () => {
+    //         console.log('came inside yes');
+
+    //         const image = await Camera.getPhoto({
+    //           quality: 75,
+    //           allowEditing: false,
+    //           resultType: CameraResultType.DataUrl,
+    //           source: CameraSource.Photos,
+    //         }).then(res => {
+
+    //           this.userimg = res.dataUrl
+
+    //           this.picurl = this.userimg.split(',');
+    //           this.profilepic = this.picurl[1]
+    //           console.log(this.profilepic);
+
+
+
+    //         })
+
+
+
+    //       }
+    //     },
+    //   ]
+    // })
+    // await confirm.present();
 
   }
 
