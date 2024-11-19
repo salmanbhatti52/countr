@@ -134,7 +134,14 @@
 
         <div *ngIf="i==selectedSurveyIndex">
           <div *ngFor="let q of questionlist; let j = index;">
+            <!-- *ngIf="q.question_type=='Text'"       -->
+
+            
+           
             <div *ngIf="j==questionIndex">
+              <div *ngIf="q.image!=null" class="align-center">
+                <img class="survey_q_img" src="{{api.imgBaseURL}}{{q.image}}" alt="">
+              </div>
               <div style="color: #404142;
               font-size: 14px;
               font-weight: 500;
@@ -154,19 +161,43 @@
                 </div>
 
                 <!-- Multilevel Choice sub answers array-->
-                <div *ngIf="multianswers==true">
-                  <div *ngIf="questionType=='Multilevel Choice'" class="pd_10">
+                <!-- <div *ngIf="multianswers==true"> -->
+                  
+                  <div *ngIf="q.question_type=='Multilevel Choice'" class="pd_10">
                     <ion-radio-group (ionChange)="mcqAnswer($event,'multi')">
                       <ion-list>
-                        <ion-item *ngFor="let subans of subanswers;let i= index;" lines="none" class="itemcls">
+                        <ion-item *ngFor="let subans of q.answers;let i= index;" lines="none" class="itemcls">
                           <ion-label class="sf_pro_display font_14_400 clr_heading">{{subans.name}}</ion-label>
                           <ion-radio aria-label="Option Label" slot="end" [value]="subans" mode="md"></ion-radio>
                         </ion-item>
                       </ion-list>
 
                     </ion-radio-group>
+
+                    <div *ngIf="multianswers==true">
+                      <!-- <div *ngIf="q.image!=null" class="align-center">
+                        <img class="survey_q_img" src="{{api.imgBaseURL}}{{q.image}}" alt="">
+                      </div> -->
+                      <div style="color: #404142;margin-top: 10px;
+                      font-size: 14px;
+                      font-weight: 500;
+                      padding: 0px 0px 10px 10px!important;">{{subQuestions.name}}</div>
+                  
+                      <div *ngIf="questionType=='Multilevel Choice'" class="pd_10">
+                        <ion-radio-group (ionChange)="mcqAnswer($event,'multi')">
+                          <ion-list>
+                            <ion-item *ngFor="let subans of subanswers;let i= index;" lines="none" class="itemcls">
+                              <ion-label class="sf_pro_display font_14_400 clr_heading">{{subans.name}}</ion-label>
+                              <ion-radio aria-label="Option Label" slot="end" [value]="subans" mode="md"></ion-radio>
+                            </ion-item>
+                          </ion-list>
+
+                        </ion-radio-group>
+                      </div>
+                    </div>
+
                   </div>
-                </div>
+                <!-- </div> -->
 
                 <div *ngIf="q.question_type=='Multiple Choice'" class="pd_10">
 
@@ -180,7 +211,7 @@
                 </div>
               </div>
 
-              <div *ngIf="q.question_type=='Multiple Choice' || q.question_type=='Single Choice'">
+              <div *ngIf="q.question_type=='Multiple Choice' || q.question_type=='Single Choice' || q.question_type=='Multilevel Choice'">
                 <ion-button (click)="UpdateQuestionIndex()">{{btnValue}}</ion-button>
               </div>
               <!-- <div *ngIf="q.question_type=='Multilevel Choice'">

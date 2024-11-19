@@ -53,6 +53,7 @@ export class HomePage implements OnInit {
   btnValue1 = 'Next'
   survey_list_qs_answers_id: any;
   survey_list_qs_id: any;
+  subQuestions:any;
   subanswers: any;
   multianswers = false;
   questionType: any;
@@ -96,6 +97,7 @@ export class HomePage implements OnInit {
       }
     })
   }
+  
   getsurveylists() {
     let data = {
       "users_customers_id": localStorage.getItem('loggedId')
@@ -201,10 +203,10 @@ export class HomePage implements OnInit {
       this.parseobjarryay = JSON.parse(this.ansobjarr)
       this.multiansarr.push(this.parseobjarryay)
     } else {
-      this.multiansarr
+      // this.multiansarr
     }
 
-    console.log(this.multiansarr);
+    console.log('multi anss',this.multiansarr);
     let data = {
       "parent_qs_id": this.survey_list_qs_id,
       "parent_qs_answers_id": this.survey_list_qs_answers_id
@@ -214,6 +216,7 @@ export class HomePage implements OnInit {
       if (res.status == 'success') {
         this.multianswers = true
         this.questionType = res.data[0].questions.question_type
+        this.subQuestions = res.data[0].questions;
         this.subanswers = res.data[0].answers
       } else {
         this.multianswers = false;
@@ -296,6 +299,8 @@ export class HomePage implements OnInit {
       survey_list_qs_answers_id: this.singleValue.survey_list_qs_answers_id,
       answer: this.singleValue.name
     }
+    console.log('setting ans obj array', data);
+    
 
     localStorage.setItem('ansobj', JSON.stringify(data))
 

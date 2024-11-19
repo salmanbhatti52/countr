@@ -6,6 +6,7 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 export class ApiService {
   // baseURL = 'https://countr.eigix.net/api'
   baseURL = 'https://portal.countr.ai/api'
+  imgBaseURL = 'https://portal.countr.ai/public/'
   constructor(public http: HttpClient) { }
 
   sendRequest(action: any, data?: any) {
